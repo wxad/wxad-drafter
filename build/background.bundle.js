@@ -1,0 +1,1 @@
+console.log("This is the background page."),chrome.tabs.onUpdated.addListener((function(o,e,s){"complete"==e.status&&console.log("Tab finished loading",o,s)})),console.log("Put the background scripts here...");
