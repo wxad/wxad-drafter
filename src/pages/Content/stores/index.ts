@@ -48,6 +48,9 @@ const useStore = create<{
   iframeEl: HTMLIFrameElement | null;
   setIframeEl: (el: HTMLIFrameElement | null) => void;
 
+  currentHoverEl: HTMLDivElement | null;
+  setCurrentHoverEl: (el: HTMLDivElement | null) => void;
+
   dimensionSwitch: boolean;
   setDimensionSwitch: (value: boolean) => void;
 
@@ -93,6 +96,9 @@ const useStore = create<{
 
   iframeEl: null,
   setIframeEl: (el) => set({ iframeEl: el }),
+
+  currentHoverEl: null,
+  setCurrentHoverEl: (el) => set({ currentHoverEl: el }),
 
   dimensionSwitch: false,
   setDimensionSwitch: (value) => set({ dimensionSwitch: value }),

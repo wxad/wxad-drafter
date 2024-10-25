@@ -177,7 +177,8 @@
 }
 
 .wxad-draft-tool {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   vertical-align: middle;
   margin-left: 16px;
   padding-left: 16px;
@@ -185,9 +186,7 @@
 }
 
 .wxad-draft-dimension {
-  /* position: absolute;
-  top: 13px;
-  right: 16px; */
+  display: flex;
   font-size: 12px;
   font-weight: 500;
 }

@@ -42892,88 +42892,6 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResp) => {
 
 /***/ }),
 
-/***/ "./src/pages/Content/AI.tsx":
-/*!**********************************!*\
-  !*** ./src/pages/Content/AI.tsx ***!
-  \**********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/@hot-loader/react-dom/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _stores__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./stores */ "./src/pages/Content/stores/index.ts");
-var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-
-
-
-
-var AI = function () {
-    var bottomToolBarEl = (0,_stores__WEBPACK_IMPORTED_MODULE_3__.useStore)(function (state) { return state.bottomToolBarEl; });
-    var handleClick = function () { return __awaiter(void 0, void 0, void 0, function () {
-        var res;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, axios__WEBPACK_IMPORTED_MODULE_2___default().get('https://wxad-drafter-api.vercel.app/api/check', {
-                        params: {
-                            text: '文案内容',
-                        },
-                    })];
-                case 1:
-                    res = _a.sent();
-                    console.log(res);
-                    return [2 /*return*/];
-            }
-        });
-    }); };
-    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, bottomToolBarEl &&
-        (0,react_dom__WEBPACK_IMPORTED_MODULE_1__.createPortal)(react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: "wxad-draft-check-btn", onClick: handleClick }, "\u68C0\u67E5\u6587\u6848"), bottomToolBarEl)));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AI);
-
-
-/***/ }),
-
 /***/ "./src/pages/Content/App.tsx":
 /*!***********************************!*\
   !*** ./src/pages/Content/App.tsx ***!
@@ -42987,16 +42905,224 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _RightPanel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RightPanel */ "./src/pages/Content/RightPanel.tsx");
-/* harmony import */ var _AI__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AI */ "./src/pages/Content/AI.tsx");
+/* harmony import */ var _Dimension__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Dimension */ "./src/pages/Content/Dimension.tsx");
+/* harmony import */ var _Base__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Base */ "./src/pages/Content/Base.tsx");
 
 
 
+
+// import AI from './AI';
 var App = function () {
     return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null,
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_RightPanel__WEBPACK_IMPORTED_MODULE_1__["default"], null),
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_AI__WEBPACK_IMPORTED_MODULE_2__["default"], null)));
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Base__WEBPACK_IMPORTED_MODULE_3__["default"], null),
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Dimension__WEBPACK_IMPORTED_MODULE_2__["default"], null),
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_RightPanel__WEBPACK_IMPORTED_MODULE_1__["default"], null)));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
+
+
+/***/ }),
+
+/***/ "./src/pages/Content/Base.tsx":
+/*!************************************!*\
+  !*** ./src/pages/Content/Base.tsx ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _stores__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./stores */ "./src/pages/Content/stores/index.ts");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils */ "./src/pages/Content/utils.ts");
+
+
+
+// 这里做一些页面初始化的操作
+var Base = function () {
+    var dimensionSwitch = (0,_stores__WEBPACK_IMPORTED_MODULE_1__.useStore)(function (state) { return state.dimensionSwitch; });
+    var setEduiEl = (0,_stores__WEBPACK_IMPORTED_MODULE_1__.useStore)(function (state) { return state.setEduiEl; });
+    var setToolBarEl = (0,_stores__WEBPACK_IMPORTED_MODULE_1__.useStore)(function (state) { return state.setToolBarEl; });
+    var setBottomToolBarEl = (0,_stores__WEBPACK_IMPORTED_MODULE_1__.useStore)(function (state) { return state.setBottomToolBarEl; });
+    var editorEl = (0,_stores__WEBPACK_IMPORTED_MODULE_1__.useStore)(function (state) { return state.editorEl; });
+    var setEditorEl = (0,_stores__WEBPACK_IMPORTED_MODULE_1__.useStore)(function (state) { return state.setEditorEl; });
+    var setIframeEl = (0,_stores__WEBPACK_IMPORTED_MODULE_1__.useStore)(function (state) { return state.setIframeEl; });
+    var setLeftPanelEl = (0,_stores__WEBPACK_IMPORTED_MODULE_1__.useStore)(function (state) { return state.setLeftPanelEl; });
+    var setCurrentHoverEl = (0,_stores__WEBPACK_IMPORTED_MODULE_1__.useStore)(function (state) { return state.setCurrentHoverEl; });
+    var setCurrentBlockStates = (0,_stores__WEBPACK_IMPORTED_MODULE_1__.useStore)(function (state) { return state.setCurrentBlockStates; });
+    var checkElements = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
+        var _a;
+        var leftPanel = document.getElementById(_utils__WEBPACK_IMPORTED_MODULE_2__.LEFT_PANEL_ID);
+        var editor = document.getElementById(_utils__WEBPACK_IMPORTED_MODULE_2__.EDITOR_MAIN_ID);
+        var edui = document.querySelector("[id^=".concat(_utils__WEBPACK_IMPORTED_MODULE_2__.EDUI_EDITOR_ID, "]"));
+        var toolBar = document.querySelector("[id^=".concat(_utils__WEBPACK_IMPORTED_MODULE_2__.JS_TOOLBAR_ID, "]"));
+        var bottomToolBar = document.querySelector("#js_button_area .tool_bar");
+        if (editor && edui && leftPanel && toolBar && bottomToolBar) {
+            setEditorEl(editor);
+            setEduiEl(edui);
+            setLeftPanelEl(leftPanel);
+            setToolBarEl(toolBar);
+            setBottomToolBarEl(bottomToolBar);
+            if (leftPanel) {
+                leftPanel.addEventListener('click', checkElements, false);
+            }
+            var foundIframe = document.querySelector("iframe[id^=".concat(_utils__WEBPACK_IMPORTED_MODULE_2__.IFRAME_ID, "]"));
+            // 向 iframe 的 body 下的所有直接子元素添加 onMouseEnter 事件
+            if (foundIframe) {
+                setIframeEl(foundIframe);
+                var iframeBody = (_a = foundIframe.contentDocument) === null || _a === void 0 ? void 0 : _a.body;
+                if (iframeBody) {
+                    var children = Array.from(iframeBody.children);
+                    children.forEach(function (child) {
+                        child.addEventListener('mouseenter', function () {
+                            setCurrentHoverEl(child);
+                        }, false);
+                    });
+                }
+            }
+        }
+        else {
+            setTimeout(function () {
+                checkElements();
+            }, 1000);
+        }
+    }, []);
+    var handleEditorMouseLeave = function () {
+        if (!_stores__WEBPACK_IMPORTED_MODULE_1__.useStore.getState().currentBlockStates.editing) {
+            setCurrentBlockStates({
+                x: 0,
+                y: 0,
+                marginTop: 0,
+                marginRight: 0,
+                marginBottom: 0,
+                marginLeft: 0,
+                paddingTop: 0,
+                paddingRight: 0,
+                paddingBottom: 0,
+                paddingLeft: 0,
+                width: 0,
+                height: 0,
+                currentEl: null,
+            });
+            setCurrentHoverEl(null);
+        }
+    };
+    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+        checkElements();
+        return function () {
+            var editorEl = _stores__WEBPACK_IMPORTED_MODULE_1__.useStore.getState().editorEl;
+            if (editorEl) {
+                editorEl.removeEventListener('mouseleave', handleEditorMouseLeave, false);
+            }
+        };
+    }, [dimensionSwitch]);
+    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+        if (editorEl) {
+            editorEl.addEventListener('mouseleave', handleEditorMouseLeave, false);
+        }
+    }, [editorEl]);
+    var handleWindowScroll = function () { };
+    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+        window.addEventListener('scroll', handleWindowScroll, false);
+        return function () {
+            window.removeEventListener('scroll', handleWindowScroll, false);
+        };
+    }, []);
+    return react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null);
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Base);
+
+
+/***/ }),
+
+/***/ "./src/pages/Content/Dimension.tsx":
+/*!*****************************************!*\
+  !*** ./src/pages/Content/Dimension.tsx ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/@hot-loader/react-dom/index.js");
+/* harmony import */ var _stores__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./stores */ "./src/pages/Content/stores/index.ts");
+/* harmony import */ var _components_Switch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Switch */ "./src/pages/Content/components/Switch.tsx");
+/* harmony import */ var _components_BlockCell__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/BlockCell */ "./src/pages/Content/components/BlockCell.tsx");
+
+
+
+
+
+// 这里实现调整间距的功能
+var Dimenson = function () {
+    var dimensionSwitch = (0,_stores__WEBPACK_IMPORTED_MODULE_2__.useStore)(function (state) { return state.dimensionSwitch; });
+    var setDimensionSwitch = (0,_stores__WEBPACK_IMPORTED_MODULE_2__.useStore)(function (state) { return state.setDimensionSwitch; });
+    var toolBarEl = (0,_stores__WEBPACK_IMPORTED_MODULE_2__.useStore)(function (state) { return state.toolBarEl; });
+    var currentBlockStates = (0,_stores__WEBPACK_IMPORTED_MODULE_2__.useStore)(function (state) { return state.currentBlockStates; });
+    var setCurrentBlockStates = (0,_stores__WEBPACK_IMPORTED_MODULE_2__.useStore)(function (state) { return state.setCurrentBlockStates; });
+    var currentHoverEl = (0,_stores__WEBPACK_IMPORTED_MODULE_2__.useStore)(function (state) { return state.currentHoverEl; });
+    var eduiEl = (0,_stores__WEBPACK_IMPORTED_MODULE_2__.useStore)(function (state) { return state.eduiEl; });
+    var reCalculateBlock = function () {
+        var iframeEl = _stores__WEBPACK_IMPORTED_MODULE_2__.useStore.getState().iframeEl;
+        var editorEl = _stores__WEBPACK_IMPORTED_MODULE_2__.useStore.getState().editorEl;
+        var eduiEl = _stores__WEBPACK_IMPORTED_MODULE_2__.useStore.getState().eduiEl;
+        var target = currentHoverEl || _stores__WEBPACK_IMPORTED_MODULE_2__.useStore.getState().currentBlockStates.currentEl;
+        if (!iframeEl || !editorEl || !eduiEl || !target) {
+            return;
+        }
+        var targetRect = target.getBoundingClientRect();
+        var iframeRect = iframeEl.getBoundingClientRect();
+        var editorRect = editorEl.getBoundingClientRect();
+        var eduiRect = eduiEl.getBoundingClientRect();
+        setCurrentBlockStates({
+            currentEl: target,
+            x: targetRect.left + editorRect.left - eduiRect.left,
+            y: targetRect.top + iframeRect.top - eduiRect.top,
+            marginTop: parseInt(getComputedStyle(target).getPropertyValue('margin-top')),
+            marginRight: parseInt(getComputedStyle(target).getPropertyValue('margin-right')),
+            marginBottom: parseInt(getComputedStyle(target).getPropertyValue('margin-bottom')),
+            marginLeft: parseInt(getComputedStyle(target).getPropertyValue('margin-left')),
+            paddingTop: parseInt(getComputedStyle(target).getPropertyValue('padding-top')),
+            paddingRight: parseInt(getComputedStyle(target).getPropertyValue('padding-right')),
+            paddingBottom: parseInt(getComputedStyle(target).getPropertyValue('padding-bottom')),
+            paddingLeft: parseInt(getComputedStyle(target).getPropertyValue('padding-left')),
+            width: targetRect.width,
+            height: targetRect.height,
+        });
+    };
+    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+        /**
+         * 注意：此事件绑定中所有的状态都需实时获取
+         */
+        if (!_stores__WEBPACK_IMPORTED_MODULE_2__.useStore.getState().currentBlockStates.editing &&
+            _stores__WEBPACK_IMPORTED_MODULE_2__.useStore.getState().dimensionSwitch) {
+            reCalculateBlock();
+        }
+    }, [currentHoverEl]);
+    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null,
+        toolBarEl &&
+            (0,react_dom__WEBPACK_IMPORTED_MODULE_1__.createPortal)(react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: "wxad-draft-tool" },
+                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_Switch__WEBPACK_IMPORTED_MODULE_3__["default"], { className: "wxad-draft-dimension", checked: dimensionSwitch, onChange: function () {
+                        setDimensionSwitch(!dimensionSwitch);
+                    } }, "\u8C03\u6574\u95F4\u8DDD")), toolBarEl),
+        eduiEl &&
+            currentBlockStates.width > 0 &&
+            currentBlockStates.height > 0 &&
+            (0,react_dom__WEBPACK_IMPORTED_MODULE_1__.createPortal)(react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: "wxad-draft-block", style: {
+                    top: currentBlockStates.y,
+                    left: currentBlockStates.x,
+                    width: currentBlockStates.width,
+                    height: currentBlockStates.height,
+                } }, ['ml', 'mr', 'mt', 'mb'].map(function (type) { return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_BlockCell__WEBPACK_IMPORTED_MODULE_4__["default"], { key: type, type: type, onChange: function () {
+                    reCalculateBlock();
+                } })); })), eduiEl)));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Dimenson);
 
 
 /***/ }),
@@ -43013,12 +43139,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/@hot-loader/react-dom/index.js");
-/* harmony import */ var _components_BlockCell__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/BlockCell */ "./src/pages/Content/components/BlockCell.tsx");
-/* harmony import */ var _components_Panel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Panel */ "./src/pages/Content/components/Panel.tsx");
-/* harmony import */ var _components_Switch__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Switch */ "./src/pages/Content/components/Switch.tsx");
-/* harmony import */ var _stores__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./stores */ "./src/pages/Content/stores/index.ts");
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./utils */ "./src/pages/Content/utils.ts");
+/* harmony import */ var _components_Panel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/Panel */ "./src/pages/Content/components/Panel.tsx");
+/* harmony import */ var _stores__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./stores */ "./src/pages/Content/stores/index.ts");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils */ "./src/pages/Content/utils.ts");
 var __assign = (undefined && undefined.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -43043,122 +43166,15 @@ var __spreadArray = (undefined && undefined.__spreadArray) || function (to, from
 
 
 
-
-
-
 var RightPanel = function () {
-    var dimensionSwitch = (0,_stores__WEBPACK_IMPORTED_MODULE_5__.useStore)(function (state) { return state.dimensionSwitch; });
-    var setDimensionSwitch = (0,_stores__WEBPACK_IMPORTED_MODULE_5__.useStore)(function (state) { return state.setDimensionSwitch; });
-    var eduiEl = (0,_stores__WEBPACK_IMPORTED_MODULE_5__.useStore)(function (state) { return state.eduiEl; });
-    var setEduiEl = (0,_stores__WEBPACK_IMPORTED_MODULE_5__.useStore)(function (state) { return state.setEduiEl; });
-    var toolBarEl = (0,_stores__WEBPACK_IMPORTED_MODULE_5__.useStore)(function (state) { return state.toolBarEl; });
-    var setToolBarEl = (0,_stores__WEBPACK_IMPORTED_MODULE_5__.useStore)(function (state) { return state.setToolBarEl; });
-    var setBottomToolBarEl = (0,_stores__WEBPACK_IMPORTED_MODULE_5__.useStore)(function (state) { return state.setBottomToolBarEl; });
-    var editorEl = (0,_stores__WEBPACK_IMPORTED_MODULE_5__.useStore)(function (state) { return state.editorEl; });
-    var iframeEl = (0,_stores__WEBPACK_IMPORTED_MODULE_5__.useStore)(function (state) { return state.iframeEl; });
-    var setEditorEl = (0,_stores__WEBPACK_IMPORTED_MODULE_5__.useStore)(function (state) { return state.setEditorEl; });
-    var setIframeEl = (0,_stores__WEBPACK_IMPORTED_MODULE_5__.useStore)(function (state) { return state.setIframeEl; });
-    var setLeftPanelEl = (0,_stores__WEBPACK_IMPORTED_MODULE_5__.useStore)(function (state) { return state.setLeftPanelEl; });
-    var currentBlockStates = (0,_stores__WEBPACK_IMPORTED_MODULE_5__.useStore)(function (state) { return state.currentBlockStates; });
-    var setCurrentBlockStates = (0,_stores__WEBPACK_IMPORTED_MODULE_5__.useStore)(function (state) { return state.setCurrentBlockStates; });
-    var contentInfos = (0,_stores__WEBPACK_IMPORTED_MODULE_5__.useStore)(function (state) { return state.contentInfos; });
-    var setContentInfos = (0,_stores__WEBPACK_IMPORTED_MODULE_5__.useStore)(function (state) { return state.setContentInfos; });
-    // 轮询检查 EDITOR_MAIN_ID 元素是否存在，存在后再 createPortal
-    var checkElements = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
-        var _a;
-        var leftPanel = document.getElementById(_utils__WEBPACK_IMPORTED_MODULE_6__.LEFT_PANEL_ID);
-        var editor = document.getElementById(_utils__WEBPACK_IMPORTED_MODULE_6__.EDITOR_MAIN_ID);
-        var edui = document.querySelector("[id^=".concat(_utils__WEBPACK_IMPORTED_MODULE_6__.EDUI_EDITOR_ID, "]"));
-        var toolBar = document.querySelector("[id^=".concat(_utils__WEBPACK_IMPORTED_MODULE_6__.JS_TOOLBAR_ID, "]"));
-        var bottomToolBar = document.querySelector("#js_button_area .tool_bar");
-        if (editor && edui && leftPanel && toolBar && bottomToolBar) {
-            setEditorEl(editor);
-            setEduiEl(edui);
-            setLeftPanelEl(leftPanel);
-            setToolBarEl(toolBar);
-            setBottomToolBarEl(bottomToolBar);
-            if (leftPanel) {
-                leftPanel.addEventListener('click', checkElements, false);
-            }
-            var foundIframe = document.querySelector("iframe[id^=".concat(_utils__WEBPACK_IMPORTED_MODULE_6__.IFRAME_ID, "]"));
-            // 向 iframe 的 body 下的所有直接子元素添加 onMouseEnter 事件
-            if (foundIframe) {
-                setIframeEl(foundIframe);
-                var iframeBody = (_a = foundIframe.contentDocument) === null || _a === void 0 ? void 0 : _a.body;
-                if (iframeBody) {
-                    var children = Array.from(iframeBody.children);
-                    children.forEach(function (child) {
-                        child.addEventListener('mouseenter', handleElMouseEnter, false);
-                    });
-                }
-            }
-        }
-        else {
-            setTimeout(function () {
-                checkElements();
-            }, 1000);
-        }
-    }, []);
-    /**
-     * 注意：此事件绑定中所有的状态都需实时获取
-     */
-    var handleElMouseEnter = function (e) {
-        if (!_stores__WEBPACK_IMPORTED_MODULE_5__.useStore.getState().currentBlockStates.editing &&
-            _stores__WEBPACK_IMPORTED_MODULE_5__.useStore.getState().dimensionSwitch) {
-            reCalculateBlock(e.target);
-        }
-    };
-    var reCalculateBlock = function (currentEl) {
-        var iframeEl = _stores__WEBPACK_IMPORTED_MODULE_5__.useStore.getState().iframeEl;
-        var editorEl = _stores__WEBPACK_IMPORTED_MODULE_5__.useStore.getState().editorEl;
-        var eduiEl = _stores__WEBPACK_IMPORTED_MODULE_5__.useStore.getState().eduiEl;
-        var target = currentEl || _stores__WEBPACK_IMPORTED_MODULE_5__.useStore.getState().currentBlockStates.currentEl;
-        if (!iframeEl || !editorEl || !eduiEl || !target) {
-            return;
-        }
-        var targetRect = target.getBoundingClientRect();
-        var iframeRect = iframeEl.getBoundingClientRect();
-        var editorRect = editorEl.getBoundingClientRect();
-        var eduiRect = eduiEl.getBoundingClientRect();
-        setCurrentBlockStates({
-            currentEl: target,
-            x: targetRect.left + editorRect.left - eduiRect.left,
-            y: targetRect.top + iframeRect.top - eduiRect.top,
-            marginTop: parseInt(getComputedStyle(target).getPropertyValue('margin-top')),
-            marginRight: parseInt(getComputedStyle(target).getPropertyValue('margin-right')),
-            marginBottom: parseInt(getComputedStyle(target).getPropertyValue('margin-bottom')),
-            marginLeft: parseInt(getComputedStyle(target).getPropertyValue('margin-left')),
-            paddingTop: parseInt(getComputedStyle(target).getPropertyValue('padding-top')),
-            paddingRight: parseInt(getComputedStyle(target).getPropertyValue('padding-right')),
-            paddingBottom: parseInt(getComputedStyle(target).getPropertyValue('padding-bottom')),
-            paddingLeft: parseInt(getComputedStyle(target).getPropertyValue('padding-left')),
-            width: targetRect.width,
-            height: targetRect.height,
-        });
-    };
-    var handleEditorMouseLeave = function () {
-        if (!_stores__WEBPACK_IMPORTED_MODULE_5__.useStore.getState().currentBlockStates.editing) {
-            setCurrentBlockStates({
-                x: 0,
-                y: 0,
-                marginTop: 0,
-                marginRight: 0,
-                marginBottom: 0,
-                marginLeft: 0,
-                paddingTop: 0,
-                paddingRight: 0,
-                paddingBottom: 0,
-                paddingLeft: 0,
-                width: 0,
-                height: 0,
-                currentEl: null,
-            });
-        }
-    };
+    var editorEl = (0,_stores__WEBPACK_IMPORTED_MODULE_2__.useStore)(function (state) { return state.editorEl; });
+    var iframeEl = (0,_stores__WEBPACK_IMPORTED_MODULE_2__.useStore)(function (state) { return state.iframeEl; });
+    var contentInfos = (0,_stores__WEBPACK_IMPORTED_MODULE_2__.useStore)(function (state) { return state.contentInfos; });
+    var setContentInfos = (0,_stores__WEBPACK_IMPORTED_MODULE_2__.useStore)(function (state) { return state.setContentInfos; });
     // 获取 iframe 内容，输出 DSL
     var getContentInfos = function () {
         var _a;
-        var iframeEl = _stores__WEBPACK_IMPORTED_MODULE_5__.useStore.getState().iframeEl;
+        var iframeEl = _stores__WEBPACK_IMPORTED_MODULE_2__.useStore.getState().iframeEl;
         if (!iframeEl) {
             return;
         }
@@ -43169,13 +43185,13 @@ var RightPanel = function () {
         var children = Array.from(iframeBody.children);
         var infos = children
             .map(function (el) {
-            var type = (0,_utils__WEBPACK_IMPORTED_MODULE_6__.getComponentType)(el);
+            var type = (0,_utils__WEBPACK_IMPORTED_MODULE_3__.getComponentType)(el);
             var top = el.getBoundingClientRect().top;
             var infos = {};
             if (type === 'image') {
-                infos.viewBox = (0,_utils__WEBPACK_IMPORTED_MODULE_6__.extractAttributeValue)(el.outerHTML, 'viewBox');
-                infos.image = (0,_utils__WEBPACK_IMPORTED_MODULE_6__.extractAttributeValue)(el.outerHTML, 'background-image');
-                infos.link = (0,_utils__WEBPACK_IMPORTED_MODULE_6__.extractAttributeValue)(el.outerHTML, 'href');
+                infos.viewBox = (0,_utils__WEBPACK_IMPORTED_MODULE_3__.extractAttributeValue)(el.outerHTML, 'viewBox');
+                infos.image = (0,_utils__WEBPACK_IMPORTED_MODULE_3__.extractAttributeValue)(el.outerHTML, 'background-image');
+                infos.link = (0,_utils__WEBPACK_IMPORTED_MODULE_3__.extractAttributeValue)(el.outerHTML, 'href');
             }
             if (type === 'carousel') {
                 // 获取所有 el foreignObject svg 有 background-image 且为 url 的元素
@@ -43210,11 +43226,6 @@ var RightPanel = function () {
         setContentInfos(infos);
     };
     (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-        if (editorEl) {
-            editorEl.addEventListener('mouseleave', handleEditorMouseLeave, false);
-        }
-    }, [editorEl]);
-    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
         var resizeObserver = new ResizeObserver(function () {
             getContentInfos();
         });
@@ -43225,59 +43236,26 @@ var RightPanel = function () {
             resizeObserver.disconnect();
         };
     }, [iframeEl]);
-    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-        checkElements();
-        return function () {
-            var editorEl = _stores__WEBPACK_IMPORTED_MODULE_5__.useStore.getState().editorEl;
-            if (editorEl) {
-                editorEl.removeEventListener('mouseleave', handleEditorMouseLeave, false);
-            }
-        };
-    }, [dimensionSwitch]);
-    var handleWindowScroll = function () { };
-    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-        window.addEventListener('scroll', handleWindowScroll, false);
-        return function () {
-            window.removeEventListener('scroll', handleWindowScroll, false);
-        };
-    }, []);
-    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null,
-        toolBarEl &&
-            (0,react_dom__WEBPACK_IMPORTED_MODULE_1__.createPortal)(react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: "wxad-draft-tool" },
-                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_Switch__WEBPACK_IMPORTED_MODULE_4__["default"], { className: "wxad-draft-dimension", style: { display: 'flex' }, checked: dimensionSwitch, onChange: function () {
-                        setDimensionSwitch(!dimensionSwitch);
-                    } }, "\u8C03\u6574\u95F4\u8DDD")), toolBarEl),
-        editorEl && (react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, contentInfos.map(function (info, index) { return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_Panel__WEBPACK_IMPORTED_MODULE_3__["default"], __assign({ key: index }, info, { onChange: function (newInfo) {
-                var _a;
-                var newInfos = __spreadArray([], contentInfos, true);
-                newInfos[index] = newInfo;
-                setContentInfos(newInfos);
-                var iframeEl = _stores__WEBPACK_IMPORTED_MODULE_5__.useStore.getState().iframeEl;
-                if (iframeEl) {
-                    iframeEl.style.userSelect = '';
-                    iframeEl.style.pointerEvents = '';
-                    // 重新计算 iframe 内 body 的高度，公众平台会设一个固定的高度
-                    var body = (_a = iframeEl.contentDocument) === null || _a === void 0 ? void 0 : _a.body;
-                    if (body) {
-                        body.style.height = '';
-                        var height = body.scrollHeight;
-                        body.style.height = "".concat(height, "px");
-                        iframeEl.style.height = "".concat(height, "px");
-                        iframeEl.parentNode.style.height = "".concat(height, "px");
-                    }
+    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, editorEl && (react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, contentInfos.map(function (info, index) { return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_Panel__WEBPACK_IMPORTED_MODULE_1__["default"], __assign({ key: index }, info, { onChange: function (newInfo) {
+            var _a;
+            var newInfos = __spreadArray([], contentInfos, true);
+            newInfos[index] = newInfo;
+            setContentInfos(newInfos);
+            var iframeEl = _stores__WEBPACK_IMPORTED_MODULE_2__.useStore.getState().iframeEl;
+            if (iframeEl) {
+                iframeEl.style.userSelect = '';
+                iframeEl.style.pointerEvents = '';
+                // 重新计算 iframe 内 body 的高度，公众平台会设一个固定的高度
+                var body = (_a = iframeEl.contentDocument) === null || _a === void 0 ? void 0 : _a.body;
+                if (body) {
+                    body.style.height = '';
+                    var height = body.scrollHeight;
+                    body.style.height = "".concat(height, "px");
+                    iframeEl.style.height = "".concat(height, "px");
+                    iframeEl.parentNode.style.height = "".concat(height, "px");
                 }
-            } }))); }))),
-        eduiEl &&
-            currentBlockStates.width > 0 &&
-            currentBlockStates.height > 0 &&
-            (0,react_dom__WEBPACK_IMPORTED_MODULE_1__.createPortal)(react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: "wxad-draft-block", style: {
-                    top: currentBlockStates.y,
-                    left: currentBlockStates.x,
-                    width: currentBlockStates.width,
-                    height: currentBlockStates.height,
-                } }, ['ml', 'mr', 'mt', 'mb'].map(function (type) { return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_BlockCell__WEBPACK_IMPORTED_MODULE_2__["default"], { key: type, type: type, onChange: function () {
-                    reCalculateBlock();
-                } })); })), eduiEl)));
+            }
+        } }))); })))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RightPanel);
 
@@ -44002,6 +43980,8 @@ var useStore = (0,zustand__WEBPACK_IMPORTED_MODULE_0__.create)()(function (set) 
     setBottomToolBarEl: function (el) { return set({ bottomToolBarEl: el }); },
     iframeEl: null,
     setIframeEl: function (el) { return set({ iframeEl: el }); },
+    currentHoverEl: null,
+    setCurrentHoverEl: function (el) { return set({ currentHoverEl: el }); },
     dimensionSwitch: false,
     setDimensionSwitch: function (value) { return set({ dimensionSwitch: value }); },
     contentInfos: [],
@@ -44943,7 +44923,7 @@ var vanilla = (createState) => {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("5e542b90e52882c1cc06")
+/******/ 		__webpack_require__.h = () => ("8447c7e00ec64b0430e2")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/harmony module decorator */
