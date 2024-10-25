@@ -21,6 +21,7 @@ const RightPanel = () => {
   const setEduiEl = useStore((state) => state.setEduiEl);
   const toolBarEl = useStore((state) => state.toolBarEl);
   const setToolBarEl = useStore((state) => state.setToolBarEl);
+  const setBottomToolBarEl = useStore((state) => state.setBottomToolBarEl);
   const editorEl = useStore((state) => state.editorEl);
   const iframeEl = useStore((state) => state.iframeEl);
   const setEditorEl = useStore((state) => state.setEditorEl);
@@ -47,12 +48,16 @@ const RightPanel = () => {
     const toolBar = document.querySelector(
       `[id^=${JS_TOOLBAR_ID}]`
     ) as HTMLDivElement | null;
+    const bottomToolBar = document.querySelector(
+      `#js_button_area .tool_bar`
+    ) as HTMLDivElement | null;
 
-    if (editor && edui && leftPanel) {
+    if (editor && edui && leftPanel && toolBar && bottomToolBar) {
       setEditorEl(editor);
       setEduiEl(edui);
       setLeftPanelEl(leftPanel);
       setToolBarEl(toolBar);
+      setBottomToolBarEl(bottomToolBar);
 
       if (leftPanel) {
         leftPanel.addEventListener('click', checkElements, false);

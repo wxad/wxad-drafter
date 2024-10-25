@@ -16,3 +16,6 @@
 
 # secrets
 secrets.*.js
+
+/build
+/dist

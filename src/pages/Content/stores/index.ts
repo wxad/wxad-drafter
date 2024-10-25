@@ -42,6 +42,9 @@ const useStore = create<{
   toolBarEl: HTMLDivElement | null;
   setToolBarEl: (el: HTMLDivElement | null) => void;
 
+  bottomToolBarEl: HTMLDivElement | null;
+  setBottomToolBarEl: (el: HTMLDivElement | null) => void;
+
   iframeEl: HTMLIFrameElement | null;
   setIframeEl: (el: HTMLIFrameElement | null) => void;
 
@@ -50,6 +53,7 @@ const useStore = create<{
 
   contentInfos: IContentInfo[]
   setContentInfos: (infos: IContentInfo[]) => void;
+
 }>()((set) => ({
   currentBlockStates: {
     x: 0,
@@ -83,6 +87,9 @@ const useStore = create<{
 
   toolBarEl: null,
   setToolBarEl: (el) => set({ toolBarEl: el }),
+
+  bottomToolBarEl: null,
+  setBottomToolBarEl: (el) => set({ bottomToolBarEl: el }),
 
   iframeEl: null,
   setIframeEl: (el) => set({ iframeEl: el }),
