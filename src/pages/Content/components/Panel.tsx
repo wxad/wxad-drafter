@@ -10,6 +10,7 @@ export interface IPanel extends IContentInfo {
 }
 
 const Panel: React.FC<IPanel> = (props) => {
+  const dimensionSwitch = useStore((state) => state.dimensionSwitch);
   const { el, type, top, infos, onChange } = props;
   const [checked, setChecked] = useState(!!infos.link);
   const [uploadState, setUploadState] = useState<
@@ -117,6 +118,8 @@ const Panel: React.FC<IPanel> = (props) => {
       style={{
         // 顶部位置写死 不算了
         top: top + 153,
+        // 调整间距模式下，隐藏 panel
+        display: dimensionSwitch ? 'none' : undefined,
       }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -128,7 +131,7 @@ const Panel: React.FC<IPanel> = (props) => {
               图片
               <div
                 style={{ fontSize: '12px', scale: 0.9, opacity: 0.5 }}
-              >{`< 5M`}</div>
+              >{`<5M`}</div>
             </div>
             <div className="wxad-draft-panel-form-control">
               <div
@@ -298,7 +301,7 @@ const Panel: React.FC<IPanel> = (props) => {
               图片
               <div
                 style={{ fontSize: '12px', scale: 0.9, opacity: 0.5 }}
-              >{`< 5M`}</div>
+              >{`<5M`}</div>
             </div>
             <div className="wxad-draft-panel-form-control">
               <CarouselUpload {...props} />

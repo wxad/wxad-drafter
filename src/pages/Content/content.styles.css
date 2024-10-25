@@ -1,3 +1,7 @@
+:root {
+  --primary-color: #000;
+}
+
 #wxad-draft-root {
   position: absolute;
   z-index: 1;
