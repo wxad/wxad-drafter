@@ -22,7 +22,7 @@ export interface IContentInfo {
   type: string | null;
   top: number;
   infos: {
-      [key: string]: any;
+    [key: string]: any;
   };
 }
 

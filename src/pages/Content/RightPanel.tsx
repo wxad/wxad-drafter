@@ -71,6 +71,28 @@ const RightPanel = () => {
     setContentInfos(infos);
   };
 
+  const reCalculateIframeHeight = () => {
+    const iframeEl = useStore.getState().iframeEl;
+    if (iframeEl) {
+      iframeEl.style.userSelect = '';
+      iframeEl.style.pointerEvents = '';
+
+      // 重新计算 iframe 内 body 的高度，公众平台会设一个固定的高度
+      const body = iframeEl.contentDocument?.body;
+      if (body) {
+        body.style.height = '';
+        const height = body.scrollHeight;
+        body.style.height = `${height}px`;
+        iframeEl.style.height = `${height}px`;
+        (iframeEl.parentNode as HTMLDivElement).style.height = `${height}px`;
+      }
+    }
+  };
+
+  useEffect(() => {
+    reCalculateIframeHeight();
+  }, [contentInfos]);
+
   useEffect(() => {
     const resizeObserver = new ResizeObserver(() => {
       getContentInfos();
@@ -91,29 +113,21 @@ const RightPanel = () => {
         <>
           {contentInfos.map((info, index) => (
             <Panel
-              key={index}
+              key={JSON.stringify(info)}
               {...info}
               onChange={(newInfo) => {
                 const newInfos = [...contentInfos];
-                newInfos[index] = newInfo;
-                setContentInfos(newInfos);
 
-                const iframeEl = useStore.getState().iframeEl;
-                if (iframeEl) {
-                  iframeEl.style.userSelect = '';
-                  iframeEl.style.pointerEvents = '';
-
-                  // 重新计算 iframe 内 body 的高度，公众平台会设一个固定的高度
-                  const body = iframeEl.contentDocument?.body;
-                  if (body) {
-                    body.style.height = '';
-                    const height = body.scrollHeight;
-                    body.style.height = `${height}px`;
-                    iframeEl.style.height = `${height}px`;
-                    (
-                      iframeEl.parentNode as HTMLDivElement
-                    ).style.height = `${height}px`;
-                  }
+                if (newInfo) {
+                  newInfos[index] = newInfo;
+                  setContentInfos(newInfos);
+                } else {
+                  // 删除
+                  newInfos.splice(index, 1);
+                  setContentInfos(newInfos);
+                  setTimeout(() => {
+                    getContentInfos();
+                  }, 0);
                 }
               }}
             />

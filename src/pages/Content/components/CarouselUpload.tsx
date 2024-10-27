@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { putPic, uploadFileBySource } from '../utils';
 import { IPanel } from './Panel';
 
@@ -20,7 +20,7 @@ const CarouselUploadItem: React.FC<ICarouselUploadItem> = ({
 }) => {
   return (
     <div
-      className="group relative block w-20 h-20 bg-cover bg-center border border-solid border-[hsl(240_5.9%_90%)] rounded overflow-hidden cursor-pointer"
+      className="group relative block w-16 h-16 bg-cover bg-center border border-solid border-[hsl(240_5.9%_90%)] rounded overflow-hidden cursor-pointer"
       style={{
         backgroundImage: item.image,
       }}

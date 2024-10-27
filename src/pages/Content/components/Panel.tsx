@@ -1,11 +1,12 @@
-import { Input, Switch } from 'adui';
+import { Button, Input, Popconfirm, Switch } from 'adui';
 import React, { useEffect, useState } from 'react';
 import { IContentInfo, useStore } from '../stores';
 import { cn, putPic, uploadFileBySource } from '../utils';
 import CarouselUpload from './CarouselUpload';
 
 export interface IPanel extends IContentInfo {
-  onChange: (info: IContentInfo) => void;
+  // 如果 info 为 null，则代表直接删除了这个元素
+  onChange: (info: IContentInfo | null) => void;
 }
 
 const Panel: React.FC<IPanel> = (props) => {
@@ -111,10 +112,28 @@ const Panel: React.FC<IPanel> = (props) => {
     }
   };
 
+  const deleteBtn = (
+    <Popconfirm
+      alignEdge={false}
+      placement="bottomRight"
+      popup="删除后不可恢复"
+      confirmText="删除"
+      confirmButton={{
+        intent: 'danger',
+      }}
+      onConfirm={() => {
+        onChange(null)
+        el.remove();
+      }}
+    >
+      <Button theme="light" leftIcon="delete-outlined" size="small" />
+    </Popconfirm>
+  );
+
   return (
     <div
       className={cn(
-        'absolute left-0 pt-6 px-4 pl-3 bg-white rounded shadow-inherit',
+        'absolute left-0 pt-2 px-4 pl-3 bg-white rounded shadow-inherit',
         // 调整间距模式下，隐藏 panel
         dimensionSwitch ? 'hidden' : ''
       )}
@@ -127,14 +146,18 @@ const Panel: React.FC<IPanel> = (props) => {
     >
       {type === 'image' && (
         <>
-          <div className="flex mb-5">
-            <div className="mr-2 text-xs">
+          <div className="flex items-center justify-between mb-3 font-semibold text-sm">
+            <div>图片</div>
+            {deleteBtn}
+          </div>
+          <div className="flex mb-3">
+            <div className="mr-2 pt-[2px] text-xs">
               图片
               <div className="scale-90 opacity-50">{`<5M`}</div>
             </div>
-            <div className="flex flex-col gap-[6px] flex-1">
+            <div className="flex flex-col gap-1 flex-1">
               <div
-                className="group relative block w-20 h-20 bg-cover bg-center border border-solid border-[hsl(240_5.9%_90%)] rounded overflow-hidden cursor-pointer"
+                className="group relative block w-16 h-16 bg-cover bg-center border border-solid border-[hsl(240_5.9%_90%)] rounded overflow-hidden cursor-pointer"
                 style={{
                   backgroundImage: infos.image,
                 }}
@@ -249,9 +272,9 @@ const Panel: React.FC<IPanel> = (props) => {
               )}
             </div>
           </div>
-          <div className="flex mb-5">
-            <div className="mr-2 text-xs">链接</div>
-            <div className="flex flex-col gap-[6px] flex-1">
+          <div className="flex mb-3">
+            <div className="mr-2 pt-[2px] text-xs">链接</div>
+            <div className="flex flex-col gap-1 flex-1">
               <Switch
                 className="w-fit"
                 checked={checked}
@@ -275,6 +298,7 @@ const Panel: React.FC<IPanel> = (props) => {
               />
               {checked && (
                 <Input
+                  size="mini"
                   value={infos.link || ''}
                   onChange={({ target: { value } }) => {
                     const newInfos = { ...infos };
@@ -295,12 +319,16 @@ const Panel: React.FC<IPanel> = (props) => {
       )}
       {type === 'carousel' && (
         <>
-          <div className="flex mb-5">
-            <div className="mr-2 text-xs">
+          <div className="flex items-center justify-between mb-3 font-semibold text-sm">
+            <div>横滑</div>
+            {deleteBtn}
+          </div>
+          <div className="flex mb-3">
+            <div className="mr-2 pt-[2px] text-xs">
               图片
               <div className="scale-90 opacity-50">{`<5M`}</div>
             </div>
-            <div className="flex flex-col gap-[6px] flex-1">
+            <div className="flex flex-col gap-1 flex-1">
               <CarouselUpload {...props} />
             </div>
           </div>
