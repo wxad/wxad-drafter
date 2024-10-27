@@ -1,9 +1,8 @@
+import { Input, Switch } from 'adui';
 import React, { useEffect, useState } from 'react';
 import { IContentInfo, useStore } from '../stores';
 import { putPic, uploadFileBySource } from '../utils';
 import CarouselUpload from './CarouselUpload';
-import Input from './Input';
-import Switch from './Switch';
 
 export interface IPanel extends IContentInfo {
   onChange: (info: IContentInfo) => void;
@@ -252,9 +251,7 @@ const Panel: React.FC<IPanel> = (props) => {
             <div className="wxad-draft-panel-form-label">链接</div>
             <div className="wxad-draft-panel-form-control">
               <Switch
-                style={{
-                  width: 'fit-content',
-                }}
+                className="w-fit"
                 checked={checked}
                 onChange={() => {
                   const newInfos = { ...infos };
@@ -277,7 +274,7 @@ const Panel: React.FC<IPanel> = (props) => {
               {checked && (
                 <Input
                   value={infos.link || ''}
-                  onChange={(value) => {
+                  onChange={({ target: { value } }) => {
                     const newInfos = { ...infos };
                     newInfos.link = value;
                     updateLink(value);

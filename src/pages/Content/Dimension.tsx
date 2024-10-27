@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useStore } from './stores';
-import Switch from './components/Switch';
+import { Switch } from 'adui';
+// import Switch from './components/Switch';
 import BlockCell from './components/BlockCell';
 
 // 这里实现调整间距的功能
@@ -82,14 +83,13 @@ const Dimenson = () => {
         createPortal(
           <div className="wxad-draft-tool">
             <Switch
-              className="wxad-draft-dimension"
               checked={dimensionSwitch}
               onChange={() => {
                 setDimensionSwitch(!dimensionSwitch);
               }}
-            >
-              调整间距
-            </Switch>
+              checkedText="调整间距"
+              unCheckedText="调整间距"
+            />
           </div>,
           toolBarEl
         )}
