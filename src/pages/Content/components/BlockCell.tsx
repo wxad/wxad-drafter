@@ -1,10 +1,10 @@
-import clsx from 'clsx';
 import React, { useEffect, useRef } from 'react';
 import { useStore } from '../stores';
+import { cn } from '../utils';
 
 const blockMap = {
   ml: {
-    className: 'wxad-draft-block-cell-ml',
+    className: 'wxad-draft-block-cell-ml top-0 h-full min-w-1 cursor-e-resize',
     property: 'marginLeft',
     position: 'left',
     dimension: 'width',
@@ -12,7 +12,7 @@ const blockMap = {
     coEfficient: 1,
   },
   mr: {
-    className: 'wxad-draft-block-cell-mr',
+    className: 'wxad-draft-block-cell-mr top-0 h-full min-w-1 cursor-w-resize',
     property: 'marginRight',
     position: 'right',
     dimension: 'width',
@@ -20,7 +20,7 @@ const blockMap = {
     coEfficient: -1,
   },
   mt: {
-    className: 'wxad-draft-block-cell-mt',
+    className: 'wxad-draft-block-cell-mt left-0 w-full min-h-1 cursor-n-resize',
     property: 'marginTop',
     position: 'top',
     dimension: 'height',
@@ -28,7 +28,7 @@ const blockMap = {
     coEfficient: -1,
   },
   mb: {
-    className: 'wxad-draft-block-cell-mb',
+    className: 'wxad-draft-block-cell-mb left-0 w-full min-h-1 cursor-s-resize',
     property: 'marginBottom',
     position: 'bottom',
     dimension: 'height',
@@ -108,8 +108,8 @@ const BlockCell: React.FC<IBlockCell> = ({ type, onChange }) => {
 
   return (
     <div
-      className={clsx(
-        'wxad-draft-block-cell',
+      className={cn(
+        'absolute',
         blockMap[type].className,
         value < 4 && 'wxad-draft-block-cell-min'
       )}
@@ -119,12 +119,12 @@ const BlockCell: React.FC<IBlockCell> = ({ type, onChange }) => {
       }}
     >
       <div
-        className="wxad-draft-block-cell-inner"
+        className="wxad-draft-block-cell-inner absolute top-0 left-0 w-full h-full select-none"
         onMouseDown={handleMouseDown}
       />
-      <div className="wxad-draft-block-cell-input-wrapper">
+      <div className="wxad-draft-block-cell-input-wrapper absolute p-[2px]">
         <input
-          className="wxad-draft-block-cell-input"
+          className="p-[3px] w-[22px] text-white text-center text-xs leading-3 font-medium whitespace-nowrap bg-[#4597f8] border-none rounded-sm outline-none cursor-text pointer-events-auto"
           value={value}
           onFocus={() => setCurrentBlockStates({ editing: true })}
           onBlur={() => setCurrentBlockStates({ editing: false })}

@@ -29,9 +29,7 @@ const AI: React.FC = () => {
     <>
       {bottomToolBarEl &&
         createPortal(
-          <div className="wxad-draft-check-btn" onClick={handleClick}>
-            检查文案
-          </div>,
+          <div onClick={handleClick}>检查文案</div>,
           bottomToolBarEl
         )}
     </>

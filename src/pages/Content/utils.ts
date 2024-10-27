@@ -1,5 +1,12 @@
 import $ from 'jquery';
 import axios from 'axios';
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
 
 // 右侧 Panel 挂载的元素
 export const EDITOR_MAIN_ID = 'editor_pannel';

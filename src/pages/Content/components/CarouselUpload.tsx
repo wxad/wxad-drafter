@@ -20,21 +20,15 @@ const CarouselUploadItem: React.FC<ICarouselUploadItem> = ({
 }) => {
   return (
     <div
-      className="wxad-draft-panel-form-img"
+      className="group relative block w-20 h-20 bg-cover bg-center border border-solid border-[hsl(240_5.9%_90%)] rounded overflow-hidden cursor-pointer"
       style={{
         backgroundImage: item.image,
       }}
     >
-      <div
-        className="wxad-draft-panel-form-img-hover"
-        // style={{
-        //   opacity: uploadState !== 'uploading' ? undefined : 0.4,
-        //   pointerEvents: uploadState !== 'uploading' ? 'auto' : 'none',
-        // }}
-      >
+      <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full font-semibold text-xs text-white bg-black bg-opacity-80 invisible group-hover:visible">
         更改
         <input
-          className="wxad-draft-panel-form-img-uploader"
+          className="absolute top-0 left-0 w-full h-full opacity-0"
           type="file"
           accept="image/*"
           title="更改"
@@ -96,8 +90,8 @@ const CarouselUploadItem: React.FC<ICarouselUploadItem> = ({
           }}
         />
       </div>
-      <div className="wxad-draft-panel-form-img-number">
-        <span>{index + 1}</span>
+      <div className="absolute top-1 right-1 w-4 h-4 flex items-center justify-center text-xs font-medium text-white bg-black bg-opacity-80 rounded-full">
+        <span className="scale-[0.8]">{index + 1}</span>
       </div>
     </div>
   );
@@ -125,7 +119,7 @@ const CarouselUpload: React.FC<IPanel> = ({
 
   return (
     <>
-      <div className="wxad-draft-carousel-upload">
+      <div className="grid w-fit grid-cols-2 gap-2">
         {items.map((item, index) => (
           <CarouselUploadItem
             key={index}

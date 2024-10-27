@@ -81,7 +81,7 @@ const Dimenson = () => {
     <>
       {toolBarEl &&
         createPortal(
-          <div className="wxad-draft-tool">
+          <div className="inline-flex items-center align-middle ml-4 pl-4 border-solid border-l border-[#e7e7eb]">
             <Switch
               checked={dimensionSwitch}
               onChange={() => {
@@ -98,7 +98,7 @@ const Dimenson = () => {
         currentBlockStates.height > 0 &&
         createPortal(
           <div
-            className="wxad-draft-block"
+            className="absolute z-[117] bg-[#4597F8] bg-opacity-10"
             style={{
               top: currentBlockStates.y,
               left: currentBlockStates.x,

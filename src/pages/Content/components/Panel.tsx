@@ -1,7 +1,7 @@
 import { Input, Switch } from 'adui';
 import React, { useEffect, useState } from 'react';
 import { IContentInfo, useStore } from '../stores';
-import { putPic, uploadFileBySource } from '../utils';
+import { cn, putPic, uploadFileBySource } from '../utils';
 import CarouselUpload from './CarouselUpload';
 
 export interface IPanel extends IContentInfo {
@@ -113,43 +113,43 @@ const Panel: React.FC<IPanel> = (props) => {
 
   return (
     <div
-      className="wxad-draft-panel"
+      className={cn(
+        'absolute left-0 pt-6 px-4 pl-3 bg-white rounded shadow-inherit',
+        // 调整间距模式下，隐藏 panel
+        dimensionSwitch ? 'hidden' : ''
+      )}
       style={{
         // 顶部位置写死 不算了
         top: top + 153,
-        // 调整间距模式下，隐藏 panel
-        display: dimensionSwitch ? 'none' : undefined,
       }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       {type === 'image' && (
         <>
-          <div className="wxad-draft-panel-form">
-            <div className="wxad-draft-panel-form-label">
+          <div className="flex mb-5">
+            <div className="mr-2 text-xs">
               图片
-              <div
-                style={{ fontSize: '12px', scale: 0.9, opacity: 0.5 }}
-              >{`<5M`}</div>
+              <div className="scale-90 opacity-50">{`<5M`}</div>
             </div>
-            <div className="wxad-draft-panel-form-control">
+            <div className="flex flex-col gap-[6px] flex-1">
               <div
-                className="wxad-draft-panel-form-img"
+                className="group relative block w-20 h-20 bg-cover bg-center border border-solid border-[hsl(240_5.9%_90%)] rounded overflow-hidden cursor-pointer"
                 style={{
                   backgroundImage: infos.image,
                 }}
               >
                 <div
-                  className="wxad-draft-panel-form-img-hover"
-                  style={{
-                    opacity: uploadState !== 'uploading' ? undefined : 0.4,
-                    pointerEvents:
-                      uploadState !== 'uploading' ? 'auto' : 'none',
-                  }}
+                  className={cn(
+                    'absolute top-0 left-0 flex items-center justify-center w-full h-full font-semibold text-xs text-white bg-black bg-opacity-80 invisible group-hover:visible',
+                    uploadState === 'uploading'
+                      ? 'opacity-40 pointer-events-none'
+                      : ''
+                  )}
                 >
                   更改
                   <input
-                    className="wxad-draft-panel-form-img-uploader"
+                    className="absolute top-0 left-0 w-full h-full opacity-0"
                     type="file"
                     accept="image/*"
                     title="更改"
@@ -237,19 +237,21 @@ const Panel: React.FC<IPanel> = (props) => {
               </div>
               {['error', 'uploading'].includes(uploadState) && (
                 <div
-                  className="wxad-draft-panel-form-img-text"
-                  style={{
-                    color: uploadState === 'uploading' ? '#999' : '#f46161',
-                  }}
+                  className={cn(
+                    'text-xs',
+                    uploadState === 'uploading'
+                      ? 'text-[#999]'
+                      : 'text-[#f46161]'
+                  )}
                 >
                   {uploadState === 'uploading' ? '上传中...' : '上传失败'}
                 </div>
               )}
             </div>
           </div>
-          <div className="wxad-draft-panel-form">
-            <div className="wxad-draft-panel-form-label">链接</div>
-            <div className="wxad-draft-panel-form-control">
+          <div className="flex mb-5">
+            <div className="mr-2 text-xs">链接</div>
+            <div className="flex flex-col gap-[6px] flex-1">
               <Switch
                 className="w-fit"
                 checked={checked}
@@ -293,14 +295,12 @@ const Panel: React.FC<IPanel> = (props) => {
       )}
       {type === 'carousel' && (
         <>
-          <div className="wxad-draft-panel-form">
-            <div className="wxad-draft-panel-form-label">
+          <div className="flex mb-5">
+            <div className="mr-2 text-xs">
               图片
-              <div
-                style={{ fontSize: '12px', scale: 0.9, opacity: 0.5 }}
-              >{`<5M`}</div>
+              <div className="scale-90 opacity-50">{`<5M`}</div>
             </div>
-            <div className="wxad-draft-panel-form-control">
+            <div className="flex flex-col gap-[6px] flex-1">
               <CarouselUpload {...props} />
             </div>
           </div>
