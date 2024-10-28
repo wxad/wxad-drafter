@@ -115,7 +115,7 @@ const Panel: React.FC<IPanel> = (props) => {
   const deleteBtn = (
     <Popconfirm
       alignEdge={false}
-      placement="bottomRight"
+      placement="topRight"
       popup="删除后不可恢复"
       confirmText="删除"
       confirmButton={{
