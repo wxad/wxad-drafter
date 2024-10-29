@@ -37,6 +37,8 @@ const RightPanel = () => {
     if (currentHoverEl) {
       const newElement = document.createElement('p');
       newElement.innerText = 'New Text';
+      newElement.style.marginLeft = "16px"
+      newElement.style.marginRight = "16px"
       currentHoverEl.after(newElement);
 
       setCurrentClickEl(newElement);
