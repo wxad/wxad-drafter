@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export interface ICurrentBlockStates {
+export interface ICurrentDimensionState {
   x: number;
   y: number;
   marginTop: number;
@@ -27,8 +27,8 @@ export interface IContentInfo {
 }
 
 const useStore = create<{
-  currentBlockStates: ICurrentBlockStates;
-  setCurrentBlockStates: (states: Partial<ICurrentBlockStates>) => void;
+  currentDimensionStates: ICurrentDimensionState;
+  setCurrentDimensionState: (states: Partial<ICurrentDimensionState>) => void;
 
   leftPanelEl: HTMLDivElement | null;
   setLeftPanelEl: (el: HTMLDivElement | null) => void;
@@ -57,14 +57,11 @@ const useStore = create<{
   dimensionSwitch: boolean;
   setDimensionSwitch: (value: boolean) => void;
 
-  contentInfos: IContentInfo[]
-  setContentInfos: (infos: IContentInfo[]) => void;
-
   currentContentInfo: IContentInfo | null;
   setCurrentContentInfo: (info: IContentInfo | null) => void;
 
 }>()((set) => ({
-  currentBlockStates: {
+  currentDimensionStates: {
     x: 0,
     y: 0,
     marginTop: 0,
@@ -80,9 +77,9 @@ const useStore = create<{
     currentEl: null,
     editing: false,
   },
-  setCurrentBlockStates: (states) =>
+  setCurrentDimensionState: (states) =>
     set((s) => ({
-      currentBlockStates: { ...s.currentBlockStates, ...states },
+      currentDimensionStates: { ...s.currentDimensionStates, ...states },
     })),
 
   leftPanelEl: null,
@@ -111,9 +108,6 @@ const useStore = create<{
 
   dimensionSwitch: false,
   setDimensionSwitch: (value) => set({ dimensionSwitch: value }),
-
-  contentInfos: [],
-  setContentInfos: (infos) => set({ contentInfos: infos }),
 
   currentContentInfo: null,
   setCurrentContentInfo: (info) => set({ currentContentInfo: info }),

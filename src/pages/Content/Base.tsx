@@ -1,13 +1,12 @@
 import React, { useCallback, useEffect } from 'react';
 import { useStore } from './stores';
-
 import {
   EDITOR_MAIN_ID,
-  IFRAME_ID,
   EDUI_EDITOR_ID,
-  LEFT_PANEL_ID,
-  JS_TOOLBAR_ID,
   getComponentType,
+  IFRAME_ID,
+  JS_TOOLBAR_ID,
+  LEFT_PANEL_ID,
 } from './utils';
 
 // 这里做一些页面初始化的操作
@@ -22,8 +21,8 @@ const Base = () => {
   const setLeftPanelEl = useStore((state) => state.setLeftPanelEl);
   const setCurrentHoverEl = useStore((state) => state.setCurrentHoverEl);
   const setCurrentClickEl = useStore((state) => state.setCurrentClickEl);
-  const setCurrentBlockStates = useStore(
-    (state) => state.setCurrentBlockStates
+  const setCurrentDimensionState = useStore(
+    (state) => state.setCurrentDimensionState
   );
 
   const checkElements = useCallback(() => {
@@ -102,8 +101,8 @@ const Base = () => {
   }, []);
 
   const handleEditorMouseLeave = () => {
-    if (!useStore.getState().currentBlockStates.editing) {
-      setCurrentBlockStates({
+    if (!useStore.getState().currentDimensionStates.editing) {
+      setCurrentDimensionState({
         x: 0,
         y: 0,
         marginTop: 0,

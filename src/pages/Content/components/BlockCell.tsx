@@ -43,19 +43,23 @@ interface IBlockCell {
 }
 
 const BlockCell: React.FC<IBlockCell> = ({ type, onChange }) => {
-  const currentBlockStates = useStore((state) => state.currentBlockStates);
-  const value = currentBlockStates[blockMap[type].property];
+  const currentDimensionStates = useStore(
+    (state) => state.currentDimensionStates
+  );
+  const value = currentDimensionStates[blockMap[type].property];
 
-  const setCurrentBlockStates = useStore(
-    (state) => state.setCurrentBlockStates
+  const setCurrentDimensionState = useStore(
+    (state) => state.setCurrentDimensionState
   );
   const start = useRef(0);
 
   const handleMouseMove = (e: MouseEvent) => {
     const diff =
       (blockMap[type].axis === 'x' ? e.clientX : e.clientY) - start.current;
-    if (currentBlockStates.currentEl) {
-      currentBlockStates.currentEl.style[blockMap[type].property] = `${Math.min(
+    if (currentDimensionStates.currentEl) {
+      currentDimensionStates.currentEl.style[
+        blockMap[type].property
+      ] = `${Math.min(
         Math.max(value + diff * blockMap[type].coEfficient, 0),
         99
       )}px`;
@@ -67,7 +71,7 @@ const BlockCell: React.FC<IBlockCell> = ({ type, onChange }) => {
     window.removeEventListener('mousemove', handleMouseMove);
     window.removeEventListener('mouseup', handleMouseUp);
     document.documentElement.style.cursor = '';
-    setCurrentBlockStates({ editing: false });
+    setCurrentDimensionState({ editing: false });
     const iframeEl = useStore.getState().iframeEl;
     if (iframeEl) {
       iframeEl.style.userSelect = '';
@@ -94,7 +98,7 @@ const BlockCell: React.FC<IBlockCell> = ({ type, onChange }) => {
       iframeEl.style.userSelect = 'none';
       iframeEl.style.pointerEvents = 'none';
     }
-    setCurrentBlockStates({ editing: true });
+    setCurrentDimensionState({ editing: true });
 
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseup', handleMouseUp);
@@ -126,13 +130,13 @@ const BlockCell: React.FC<IBlockCell> = ({ type, onChange }) => {
         <input
           className="p-[3px] w-[22px] text-white text-center text-xs leading-3 font-medium whitespace-nowrap bg-[#4597f8] border-none rounded-sm outline-none cursor-text pointer-events-auto"
           value={value}
-          onFocus={() => setCurrentBlockStates({ editing: true })}
-          onBlur={() => setCurrentBlockStates({ editing: false })}
+          onFocus={() => setCurrentDimensionState({ editing: true })}
+          onBlur={() => setCurrentDimensionState({ editing: false })}
           onChange={(e) => {
             const value = e.target.value;
             if (/^\d*$/.test(value) || value === '') {
-              if (currentBlockStates.currentEl) {
-                currentBlockStates.currentEl.style[
+              if (currentDimensionStates.currentEl) {
+                currentDimensionStates.currentEl.style[
                   blockMap[type].property
                 ] = `${Math.min(parseInt(value) || 0, 99)}px`;
               }

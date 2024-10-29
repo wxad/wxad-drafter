@@ -1,18 +1,20 @@
+import { Switch } from 'adui';
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { useStore } from './stores';
-import { Switch } from 'adui';
 // import Switch from './components/Switch';
 import BlockCell from './components/BlockCell';
+import { useStore } from './stores';
 
 // 这里实现调整间距的功能
 const Dimenson = () => {
   const dimensionSwitch = useStore((state) => state.dimensionSwitch);
   const setDimensionSwitch = useStore((state) => state.setDimensionSwitch);
   const toolBarEl = useStore((state) => state.toolBarEl);
-  const currentBlockStates = useStore((state) => state.currentBlockStates);
-  const setCurrentBlockStates = useStore(
-    (state) => state.setCurrentBlockStates
+  const currentDimensionStates = useStore(
+    (state) => state.currentDimensionStates
+  );
+  const setCurrentDimensionState = useStore(
+    (state) => state.setCurrentDimensionState
   );
   const currentHoverEl = useStore((state) => state.currentHoverEl);
   const eduiEl = useStore((state) => state.eduiEl);
@@ -22,7 +24,7 @@ const Dimenson = () => {
     const editorEl = useStore.getState().editorEl;
     const eduiEl = useStore.getState().eduiEl;
     const target =
-      currentHoverEl || useStore.getState().currentBlockStates.currentEl;
+      currentHoverEl || useStore.getState().currentDimensionStates.currentEl;
 
     if (!iframeEl || !editorEl || !eduiEl || !target) {
       return;
@@ -32,7 +34,7 @@ const Dimenson = () => {
     const editorRect = editorEl.getBoundingClientRect();
     const eduiRect = eduiEl.getBoundingClientRect();
 
-    setCurrentBlockStates({
+    setCurrentDimensionState({
       currentEl: target,
       x: targetRect.left + editorRect.left - eduiRect.left,
       y: targetRect.top + iframeRect.top - eduiRect.top,
@@ -70,7 +72,7 @@ const Dimenson = () => {
      * 注意：此事件绑定中所有的状态都需实时获取
      */
     if (
-      !useStore.getState().currentBlockStates.editing &&
+      !useStore.getState().currentDimensionStates.editing &&
       useStore.getState().dimensionSwitch
     ) {
       reCalculateBlock();
@@ -94,16 +96,17 @@ const Dimenson = () => {
           toolBarEl
         )}
       {eduiEl &&
-        currentBlockStates.width > 0 &&
-        currentBlockStates.height > 0 &&
+        dimensionSwitch &&
+        currentDimensionStates.width > 0 &&
+        currentDimensionStates.height > 0 &&
         createPortal(
           <div
             className="absolute z-[117] bg-[#4597F8] bg-opacity-10"
             style={{
-              top: currentBlockStates.y,
-              left: currentBlockStates.x,
-              width: currentBlockStates.width,
-              height: currentBlockStates.height,
+              top: currentDimensionStates.y,
+              left: currentDimensionStates.x,
+              width: currentDimensionStates.width,
+              height: currentDimensionStates.height,
             }}
           >
             {(['ml', 'mr', 'mt', 'mb'] as const).map((type) => (
