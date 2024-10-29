@@ -5,7 +5,12 @@ import PanelText from './components/PanelText';
 import PanelCarousel from './components/PanelCarousel';
 import PanelImage from './components/PanelImage';
 import { useStore } from './stores';
-import { cn, extractAttributeValue, getComponentType } from './utils';
+import {
+  cn,
+  extractAttributeValue,
+  getComponentType,
+  componentLists,
+} from './utils';
 
 const RightPanel = () => {
   const dimensionSwitch = useStore((state) => state.dimensionSwitch);
@@ -18,12 +23,25 @@ const RightPanel = () => {
   );
   const currentHoverEl = useStore((state) => state.currentHoverEl);
   const currentClickEl = useStore((state) => state.currentClickEl);
+  const setCurrentClickEl = useStore((state) => state.setCurrentClickEl);
 
   const currentHoverElType = getComponentType(currentHoverEl);
   const currentClickElType = getComponentType(currentClickEl);
 
   const { type, top } = currentContentInfo || {};
   const [popupVisible, setPopupVisible] = useState(false);
+
+  const handleAddComponent = (type: string) => {
+    setPopupVisible(false);
+
+    if (currentHoverEl) {
+      const newElement = document.createElement('p');
+      newElement.innerText = 'New Text';
+      currentHoverEl.after(newElement);
+
+      setCurrentClickEl(newElement);
+    }
+  };
 
   const reCalculateIframeHeight = () => {
     const iframeEl = useStore.getState().iframeEl;
@@ -186,6 +204,7 @@ const RightPanel = () => {
               'absolute z-[117] pointer-events-none',
               currentHoverElType !== 'text' && 'bg-[#4597f8] bg-opacity-10'
             )}
+            // onClick={(e) => e.stopPropagation()}
             style={{
               top: currentHoverStates.y,
               left: currentHoverStates.x,
@@ -205,40 +224,43 @@ const RightPanel = () => {
                 placement="bottom"
                 popup={
                   <div className="py-2 w-[150px]">
-                    <div className="mb-1 px-2 text-xs font-medium text-neutral-400">
-                      基本区块
-                    </div>
-                    <div className="mb-1">
-                      <div className="flex items-center mx-1 p-1 rounded cursor-pointer hover:bg-neutral-100">
-                        <img
-                          src="https://www.notion.so/images/blocks/text/en-US.png"
-                          alt=""
-                          className="mr-2 flex-none w-8 h-8 rounded border border-solid border-neutral-200"
-                        />
-                        <div className="text-[13px]">文本</div>
+                    {componentLists.map((cp, index) => (
+                      <div
+                        key={cp.title}
+                        className={cn(
+                          index !== componentLists.length - 1 && 'mb-1'
+                        )}
+                      >
+                        <div
+                          className={cn(
+                            'mb-1 px-2 text-xs font-medium text-neutral-400',
+                            index !== 0 &&
+                              'pt-2 border-t border-solid border-neutral-200'
+                          )}
+                        >
+                          {cp.title}
+                        </div>
+                        <div className="mb-1">
+                          {cp.children.map((child) => (
+                            <div
+                              key={child.type}
+                              className="flex items-center mx-1 p-1 rounded cursor-pointer hover:bg-neutral-100"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleAddComponent(child.type);
+                              }}
+                            >
+                              <img
+                                src={child.icon}
+                                alt=""
+                                className="mr-2 flex-none w-8 h-8 rounded border border-solid border-neutral-200"
+                              />
+                              <div className="text-[13px]">{child.title}</div>
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                    <div className="mb-1 px-2 pt-2 text-xs font-medium text-neutral-400 border-t border-solid border-neutral-200">
-                      媒体
-                    </div>
-                    <div>
-                      <div className="flex items-center mx-1 p-1 rounded cursor-pointer hover:bg-neutral-100">
-                        <img
-                          src="https://www.notion.so/images/blocks/text/en-US.png"
-                          alt=""
-                          className="mr-2 flex-none w-8 h-8 rounded border border-solid border-neutral-200"
-                        />
-                        <div className="text-[13px]">图片</div>
-                      </div>
-                      <div className="flex items-center mx-1 p-1 rounded cursor-pointer hover:bg-neutral-100">
-                        <img
-                          src="https://www.notion.so/images/blocks/text/en-US.png"
-                          alt=""
-                          className="mr-2 flex-none w-8 h-8 rounded border border-solid border-neutral-200"
-                        />
-                        <div className="text-[13px]">横滑</div>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 }
               >

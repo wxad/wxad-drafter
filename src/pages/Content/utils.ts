@@ -7,7 +7,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-
 // 右侧 Panel 挂载的元素
 export const EDITOR_MAIN_ID = 'editor_pannel';
 // 主 iFrame, id 是 ueditor_0，保险起见找 ueditor 开头的 iframe
@@ -209,3 +208,31 @@ export const uploadFileBySource = async (src: string) => {
   }
   return res.url as string;
 };
+
+export const componentLists = [
+  {
+    title: "基本区块",
+    children: [
+      {
+        title: "文本",
+        icon: "https://wxa.wxs.qq.com/wxad-design/yijie/notion-en-US.png",
+        type: "text",
+      },
+    ]
+  },
+  {
+    title: "媒体",
+    children: [
+      {
+        title: "图片",
+        icon: "https://wxa.wxs.qq.com/wxad-design/yijie/notion-en-US.png",
+        type: "image",
+      },
+      {
+        title: "横滑",
+        icon: "https://wxa.wxs.qq.com/wxad-design/yijie/notion-en-US.png",
+        type: "carousel",
+      },
+    ]
+  }
+]
