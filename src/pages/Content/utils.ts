@@ -20,7 +20,7 @@ export const LEFT_PANEL_ID = 'js_side_article_list';
 export const JS_TOOLBAR_ID = 'js_toolbar';
 
 // 判断是否是 svg 图片组件
-export const isImageComponent = (element: HTMLElement): boolean => {
+export const isImageComponent = (element: Element): boolean => {
   return (
     element.outerHTML.includes('svg') &&
     element.outerHTML.includes('background-image') &&
@@ -29,14 +29,19 @@ export const isImageComponent = (element: HTMLElement): boolean => {
 };
 
 // 判断是否是横滑组件
-export const isCarouselComponent = (element: HTMLElement): boolean => {
+export const isCarouselComponent = (element: Element): boolean => {
   return (
     element.outerHTML.includes('overflow-x') &&
     element.outerHTML.includes('foreignObject')
   );
 };
 
-export const getComponentType = (element: HTMLElement) => {
+// 判断是否是文字组件
+export const isTextComponent = (element: Element): boolean => {
+  return true
+}
+
+export const getComponentType = (element: Element) => {
   if (isCarouselComponent(element)) {
     return 'carousel';
   }
@@ -45,7 +50,11 @@ export const getComponentType = (element: HTMLElement) => {
     return 'image';
   }
 
-  return null;
+  if (isTextComponent(element)) {
+    return 'text';
+  }
+
+  return "";
 };
 
 // 获取属性值，注意可能存在于子元素中，递归寻找

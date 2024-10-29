@@ -3,16 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { IContentInfo, useStore } from '../stores';
 import { cn, putPic, uploadFileBySource } from '../utils';
 import CarouselUpload from './CarouselUpload';
+import PanelImage from './PanelImage';
 
-export interface IPanel extends IContentInfo {
-  // 如果 info 为 null，则代表直接删除了这个元素
-  onChange: (info: IContentInfo | null) => void;
-}
-
-const Panel: React.FC<IPanel> = (props) => {
+const Panel: React.FC = () => {
   const dimensionSwitch = useStore((state) => state.dimensionSwitch);
-  const { el, type, top, infos, onChange } = props;
-  const [checked, setChecked] = useState(!!infos.link);
+  const currentContentInfo = useStore((state) => state.currentContentInfo);
+  const setCurrentClickEl = useStore((state) => state.setCurrentClickEl);
+  const { el, type, top, infos } = currentContentInfo as IContentInfo;
   const [uploadState, setUploadState] = useState<
     'idle' | 'uploading' | 'error'
   >('idle');
@@ -27,10 +24,6 @@ const Panel: React.FC<IPanel> = (props) => {
       el.style.boxShadow = '';
     }
   };
-
-  useEffect(() => {
-    // setChecked(!!infos.link);
-  }, [infos.link]);
 
   useEffect(() => {
     return () => {
@@ -122,8 +115,8 @@ const Panel: React.FC<IPanel> = (props) => {
         intent: 'danger',
       }}
       onConfirm={() => {
-        onChange(null)
         el.remove();
+        setCurrentClickEl(null);
       }}
     >
       <Button theme="light" leftIcon="delete-outlined" size="small" />
@@ -143,197 +136,13 @@ const Panel: React.FC<IPanel> = (props) => {
       }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={(e) => {
+        // Base.tsx 中对 window 上增加了 click 事件，用于清除 currentClickEl
+        e.stopPropagation();
+      }}
     >
-      {type === 'image' && (
-        <>
-          <div className="flex items-center justify-between mb-3 font-semibold text-sm">
-            <div>图片</div>
-            {deleteBtn}
-          </div>
-          <div className="flex mb-3">
-            <div className="mr-2 pt-[2px] text-xs">
-              图片
-              <div className="scale-90 opacity-50">{`<5M`}</div>
-            </div>
-            <div className="flex flex-col gap-1 flex-1">
-              <div
-                className="group relative block w-16 h-16 bg-cover bg-center border border-solid border-[hsl(240_5.9%_90%)] rounded overflow-hidden cursor-pointer"
-                style={{
-                  backgroundImage: infos.image,
-                }}
-              >
-                <div
-                  className={cn(
-                    'absolute top-0 left-0 flex items-center justify-center w-full h-full font-semibold text-xs text-white bg-black bg-opacity-80 invisible group-hover:visible',
-                    uploadState === 'uploading'
-                      ? 'opacity-40 pointer-events-none'
-                      : ''
-                  )}
-                >
-                  更改
-                  <input
-                    className="absolute top-0 left-0 w-full h-full opacity-0"
-                    type="file"
-                    accept="image/*"
-                    title="更改"
-                    onChange={(e) => {
-                      setUploadState('uploading');
-                      const file = e.target.files?.[0];
-
-                      const reset = () => {
-                        if (e.target) {
-                          e.target.value = '';
-                        }
-
-                        setUploadState('error');
-                      };
-
-                      if (file) {
-                        const reader = new FileReader();
-                        reader.onload = (e) => {
-                          const newInfos = { ...infos };
-                          const image = new Image();
-                          image.src = e.target?.result as string;
-                          image.onload = async () => {
-                            const githubLinks = await putPic(file);
-                            // const githubLinks = [
-                            //   'https://cdn.jsdelivr.net/gh/aragakey/files@main/2024/8/1726036304976.gif',
-                            //   'https://wxa.wxs.qq.com/wxad-design/yijie/1726036304976.gif',
-                            // ];
-                            let mpLink = await uploadFileBySource(
-                              githubLinks[0]
-                            );
-
-                            if (!mpLink) {
-                              console.log('[yijie]', '上传第一次失败');
-                              mpLink = await uploadFileBySource(githubLinks[1]);
-
-                              if (!mpLink) {
-                                console.log('[yijie]', '上传第二次失败');
-
-                                mpLink = await uploadFileBySource(
-                                  githubLinks[0]
-                                );
-
-                                if (!mpLink) {
-                                  console.log('[yijie]', '上传第三次失败');
-                                  mpLink = await uploadFileBySource(
-                                    githubLinks[1]
-                                  );
-
-                                  if (!mpLink) {
-                                    console.log('[yijie]', '上传第四次失败');
-
-                                    reset();
-                                    return;
-                                  }
-                                }
-                              }
-                            }
-
-                            setUploadState('idle');
-
-                            newInfos.width = `${image.width}`;
-                            newInfos.height = `${image.height}`;
-
-                            newInfos.image = `url(${mpLink})`;
-
-                            onChange({
-                              el,
-                              type,
-                              top,
-                              infos: newInfos,
-                            });
-
-                            updateImage(
-                              newInfos.image,
-                              newInfos.width,
-                              newInfos.height
-                            );
-                          };
-                        };
-                        reader.readAsDataURL(file);
-                      }
-                    }}
-                  />
-                </div>
-              </div>
-              {['error', 'uploading'].includes(uploadState) && (
-                <div
-                  className={cn(
-                    'text-xs',
-                    uploadState === 'uploading'
-                      ? 'text-[#999]'
-                      : 'text-[#f46161]'
-                  )}
-                >
-                  {uploadState === 'uploading' ? '上传中...' : '上传失败'}
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="flex mb-3">
-            <div className="mr-2 pt-[2px] text-xs">链接</div>
-            <div className="flex flex-col gap-1 flex-1">
-              <Switch
-                className="w-fit"
-                checked={checked}
-                onChange={() => {
-                  const newInfos = { ...infos };
-                  if (newInfos.link) {
-                    newInfos.link = '';
-                  } else {
-                    newInfos.link = 'https://';
-                  }
-                  setChecked(!!newInfos.link);
-                  updateLink(newInfos.link);
-
-                  onChange({
-                    el,
-                    type,
-                    top,
-                    infos: newInfos,
-                  });
-                }}
-              />
-              {checked && (
-                <Input
-                  size="mini"
-                  value={infos.link || ''}
-                  onChange={({ target: { value } }) => {
-                    const newInfos = { ...infos };
-                    newInfos.link = value;
-                    updateLink(value);
-                    onChange({
-                      el,
-                      type,
-                      top,
-                      infos: newInfos,
-                    });
-                  }}
-                />
-              )}
-            </div>
-          </div>
-        </>
-      )}
-      {type === 'carousel' && (
-        <>
-          <div className="flex items-center justify-between mb-3 font-semibold text-sm">
-            <div>横滑</div>
-            {deleteBtn}
-          </div>
-          <div className="flex mb-3">
-            <div className="mr-2 pt-[2px] text-xs">
-              图片
-              <div className="scale-90 opacity-50">{`<5M`}</div>
-            </div>
-            <div className="flex flex-col gap-1 flex-1">
-              <CarouselUpload {...props} />
-            </div>
-          </div>
-        </>
-      )}
+      {type === 'image' && <PanelImage />}
+      {type === 'carousel' && <PanelCarousel />}
     </div>
   );
 };

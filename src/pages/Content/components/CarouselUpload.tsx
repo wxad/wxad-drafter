@@ -1,6 +1,6 @@
 import React from 'react';
+import { IContentInfo, useStore } from '../stores';
 import { putPic, uploadFileBySource } from '../utils';
-import { IPanel } from './Panel';
 
 interface IInfoItem {
   el: SVGSVGElement;
@@ -97,19 +97,18 @@ const CarouselUploadItem: React.FC<ICarouselUploadItem> = ({
   );
 };
 
-const CarouselUpload: React.FC<IPanel> = ({
-  el,
-  type,
-  top,
-  infos,
-  onChange,
-}) => {
+const CarouselUpload: React.FC = () => {
+  const currentContentInfo = useStore((state) => state.currentContentInfo);
+  const setCurrentContentInfo = useStore(
+    (state) => state.setCurrentContentInfo
+  );
+  const { el, type, top, infos } = currentContentInfo as IContentInfo;
   const items: IInfoItem[] = infos.carousel;
 
   const handleItemChange = (item: IInfoItem, index: number) => {
     const newInfos = { ...infos };
     newInfos.carousel[index] = item;
-    onChange({
+    setCurrentContentInfo({
       el,
       type,
       top,

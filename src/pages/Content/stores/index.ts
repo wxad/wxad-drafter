@@ -51,11 +51,17 @@ const useStore = create<{
   currentHoverEl: HTMLDivElement | null;
   setCurrentHoverEl: (el: HTMLDivElement | null) => void;
 
+  currentClickEl: HTMLDivElement | null;
+  setCurrentClickEl: (el: HTMLDivElement | null) => void;
+
   dimensionSwitch: boolean;
   setDimensionSwitch: (value: boolean) => void;
 
   contentInfos: IContentInfo[]
   setContentInfos: (infos: IContentInfo[]) => void;
+
+  currentContentInfo: IContentInfo | null;
+  setCurrentContentInfo: (info: IContentInfo | null) => void;
 
 }>()((set) => ({
   currentBlockStates: {
@@ -100,11 +106,17 @@ const useStore = create<{
   currentHoverEl: null,
   setCurrentHoverEl: (el) => set({ currentHoverEl: el }),
 
+  currentClickEl: null,
+  setCurrentClickEl: (el) => set({ currentClickEl: el }),
+
   dimensionSwitch: false,
   setDimensionSwitch: (value) => set({ dimensionSwitch: value }),
 
   contentInfos: [],
   setContentInfos: (infos) => set({ contentInfos: infos }),
+
+  currentContentInfo: null,
+  setCurrentContentInfo: (info) => set({ currentContentInfo: info }),
 }));
 
 export { useStore };

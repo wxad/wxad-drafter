@@ -7,6 +7,7 @@ import {
   EDUI_EDITOR_ID,
   LEFT_PANEL_ID,
   JS_TOOLBAR_ID,
+  getComponentType,
 } from './utils';
 
 // 这里做一些页面初始化的操作
@@ -20,6 +21,7 @@ const Base = () => {
   const setIframeEl = useStore((state) => state.setIframeEl);
   const setLeftPanelEl = useStore((state) => state.setLeftPanelEl);
   const setCurrentHoverEl = useStore((state) => state.setCurrentHoverEl);
+  const setCurrentClickEl = useStore((state) => state.setCurrentClickEl);
   const setCurrentBlockStates = useStore(
     (state) => state.setCurrentBlockStates
   );
@@ -63,10 +65,29 @@ const Base = () => {
         if (iframeBody) {
           const children = Array.from(iframeBody.children);
           children.forEach((child) => {
+            const type = getComponentType(child);
             child.addEventListener(
               'mouseenter',
               () => {
                 setCurrentHoverEl(child as HTMLDivElement);
+              },
+              false
+            );
+            child.addEventListener(
+              'mouseleave',
+              () => {
+                setCurrentHoverEl(null);
+              },
+              false
+            );
+            child.addEventListener(
+              'click',
+              (e) => {
+                if (['image', 'carousel'].includes(type)) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }
+                setCurrentClickEl(child as HTMLDivElement);
               },
               false
             );
@@ -123,12 +144,17 @@ const Base = () => {
   }, [editorEl]);
 
   const handleWindowScroll = () => {};
+  const handleWindowClick = () => {
+    setCurrentClickEl(null);
+  };
 
   useEffect(() => {
     window.addEventListener('scroll', handleWindowScroll, false);
+    window.addEventListener('click', handleWindowClick, false);
 
     return () => {
       window.removeEventListener('scroll', handleWindowScroll, false);
+      window.removeEventListener('click', handleWindowClick, false);
     };
   }, []);
 

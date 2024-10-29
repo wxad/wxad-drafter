@@ -8,6 +8,12 @@ const RightPanel = () => {
   const iframeEl = useStore((state) => state.iframeEl);
   const contentInfos = useStore((state) => state.contentInfos);
   const setContentInfos = useStore((state) => state.setContentInfos);
+  const currentContentInfo = useStore((state) => state.currentContentInfo);
+  const setCurrentContentInfo = useStore(
+    (state) => state.setCurrentContentInfo
+  );
+  const currentHoverEl = useStore((state) => state.currentHoverEl);
+  const currentClickEl = useStore((state) => state.currentClickEl);
 
   // 获取 iframe 内容，输出 DSL
   const getContentInfos = () => {
@@ -107,31 +113,70 @@ const RightPanel = () => {
     };
   }, [iframeEl]);
 
+  useEffect(() => {
+    if (currentClickEl) {
+      const rect = currentClickEl.getBoundingClientRect();
+      const type = getComponentType(currentClickEl);
+      let infos: { [key: string]: any } = {};
+
+      if (type === 'image') {
+        infos.viewBox = extractAttributeValue(
+          currentClickEl.outerHTML,
+          'viewBox'
+        );
+        infos.image = extractAttributeValue(
+          currentClickEl.outerHTML,
+          'background-image'
+        );
+        infos.link = extractAttributeValue(currentClickEl.outerHTML, 'href');
+      }
+
+      if (type === 'carousel') {
+        // 获取所有 currentClickEl foreignObject svg 有 background-image 且为 url 的元素
+        const svgs = Array.from(
+          currentClickEl.querySelectorAll('foreignObject svg[style*="url"]')
+        ) as SVGSVGElement[];
+
+        infos.carousel = Array.from(svgs).map((svg) => {
+          return {
+            el: svg,
+            image: svg.style.backgroundImage,
+          };
+        });
+      }
+
+      setCurrentContentInfo({
+        el: currentClickEl,
+        type,
+        top: rect.top,
+        infos,
+      });
+    } else {
+      setCurrentContentInfo(null);
+    }
+  }, [currentClickEl]);
+
+  useEffect(() => {
+    // 给当前 hover 的元素添加 cursor 样式
+    if (currentHoverEl) {
+      const type = getComponentType(currentHoverEl);
+      if (['image', 'carousel'].includes(type)) {
+        currentHoverEl.style.cursor = 'pointer';
+      }
+    }
+
+    return () => {
+      if (currentHoverEl) {
+        currentHoverEl.style.cursor = '';
+      }
+    };
+  }, [currentHoverEl]);
+
   return (
     <>
-      {editorEl && (
+      {editorEl && currentContentInfo && (
         <>
-          {contentInfos.map((info, index) => (
-            <Panel
-              key={JSON.stringify(info)}
-              {...info}
-              onChange={(newInfo) => {
-                const newInfos = [...contentInfos];
-
-                if (newInfo) {
-                  newInfos[index] = newInfo;
-                  setContentInfos(newInfos);
-                } else {
-                  // 删除
-                  newInfos.splice(index, 1);
-                  setContentInfos(newInfos);
-                  setTimeout(() => {
-                    getContentInfos();
-                  }, 0);
-                }
-              }}
-            />
-          ))}
+          <Panel />
         </>
       )}
     </>
