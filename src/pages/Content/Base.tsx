@@ -17,6 +17,7 @@ const Base = () => {
   const setBottomToolBarEl = useStore((state) => state.setBottomToolBarEl);
   const editorEl = useStore((state) => state.editorEl);
   const setEditorEl = useStore((state) => state.setEditorEl);
+  const iframeEl = useStore((state) => state.iframeEl);
   const setIframeEl = useStore((state) => state.setIframeEl);
   const setLeftPanelEl = useStore((state) => state.setLeftPanelEl);
   const setCurrentHoverEl = useStore((state) => state.setCurrentHoverEl);
@@ -60,38 +61,6 @@ const Base = () => {
       // 向 iframe 的 body 下的所有直接子元素添加 onMouseEnter 事件
       if (foundIframe) {
         setIframeEl(foundIframe);
-        const iframeBody = foundIframe.contentDocument?.body;
-        if (iframeBody) {
-          const children = Array.from(iframeBody.children);
-          children.forEach((child) => {
-            const type = getComponentType(child);
-            child.addEventListener(
-              'mouseenter',
-              () => {
-                setCurrentHoverEl(child as HTMLDivElement);
-              },
-              false
-            );
-            child.addEventListener(
-              'mouseleave',
-              () => {
-                setCurrentHoverEl(null);
-              },
-              false
-            );
-            child.addEventListener(
-              'click',
-              (e) => {
-                if (['image', 'carousel'].includes(type)) {
-                  e.preventDefault();
-                  e.stopPropagation();
-                }
-                setCurrentClickEl(child as HTMLDivElement);
-              },
-              false
-            );
-          });
-        }
       }
     } else {
       setTimeout(() => {
@@ -141,6 +110,53 @@ const Base = () => {
       editorEl.addEventListener('mouseleave', handleEditorMouseLeave, false);
     }
   }, [editorEl]);
+
+  const bindEvents = () => {
+    const iframeBody = iframeEl?.contentDocument?.body;
+    if (iframeBody) {
+      const children = Array.from(iframeBody.children);
+      children.forEach((child) => {
+        const type = getComponentType(child);
+        child.addEventListener(
+          'mouseenter',
+          () => {
+            setCurrentHoverEl(child as HTMLDivElement);
+          },
+          false
+        );
+        // child.addEventListener(
+        //   'mouseleave',
+        //   () => {
+        //     setCurrentHoverEl(null);
+        //   },
+        //   false
+        // );
+        child.addEventListener(
+          'click',
+          (e) => {
+            if (['image', 'carousel'].includes(type)) {
+              e.preventDefault();
+              e.stopPropagation();
+            }
+            setCurrentClickEl(child as HTMLDivElement);
+          },
+          false
+        );
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (iframeEl) {
+      const resizeObserver = new ResizeObserver(() => {
+        bindEvents();
+      });
+      resizeObserver.observe(iframeEl.contentDocument?.body as Element);
+      return () => {
+        resizeObserver.disconnect();
+      };
+    }
+  }, [iframeEl]);
 
   const handleWindowScroll = () => {};
   const handleWindowClick = () => {

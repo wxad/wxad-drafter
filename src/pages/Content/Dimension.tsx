@@ -101,7 +101,7 @@ const Dimenson = () => {
         currentDimensionStates.height > 0 &&
         createPortal(
           <div
-            className="absolute z-[117] bg-[#4597F8] bg-opacity-10"
+            className="absolute z-[117] bg-[#4597f8] bg-opacity-10"
             style={{
               top: currentDimensionStates.y,
               left: currentDimensionStates.x,

@@ -41,7 +41,10 @@ export const isTextComponent = (element: Element): boolean => {
   return true
 }
 
-export const getComponentType = (element: Element) => {
+export const getComponentType = (element?: Element | null) => {
+  if (!element) {
+    return ""
+  }
   if (isCarouselComponent(element)) {
     return 'carousel';
   }
