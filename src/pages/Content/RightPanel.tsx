@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react';
-import Panel from './components/Panel';
-import { useStore } from './stores';
+import { IContentInfo, useStore } from './stores';
 import { getComponentType, extractAttributeValue } from './utils';
+import { cn } from './utils';
+import PanelImage from './components/PanelImage';
+import PanelCarousel from './components/PanelCarousel';
 
 const RightPanel = () => {
+  const dimensionSwitch = useStore((state) => state.dimensionSwitch);
   const editorEl = useStore((state) => state.editorEl);
   const iframeEl = useStore((state) => state.iframeEl);
   const contentInfos = useStore((state) => state.contentInfos);
@@ -14,6 +17,8 @@ const RightPanel = () => {
   );
   const currentHoverEl = useStore((state) => state.currentHoverEl);
   const currentClickEl = useStore((state) => state.currentClickEl);
+
+  const { type, top } = currentContentInfo as IContentInfo;
 
   // 获取 iframe 内容，输出 DSL
   const getContentInfos = () => {
@@ -175,9 +180,24 @@ const RightPanel = () => {
   return (
     <>
       {editorEl && currentContentInfo && (
-        <>
-          <Panel />
-        </>
+        <div
+          className={cn(
+            'absolute left-0 pt-2 px-4 pl-3 bg-white rounded shadow-inherit',
+            // 调整间距模式下，隐藏 panel
+            dimensionSwitch ? 'hidden' : ''
+          )}
+          style={{
+            // 顶部位置写死 不算了
+            top: top + 153,
+          }}
+          onClick={(e) => {
+            // Base.tsx 中对 window 上增加了 click 事件，用于清除 currentClickEl
+            e.stopPropagation();
+          }}
+        >
+          {type === 'image' && <PanelImage />}
+          {type === 'carousel' && <PanelCarousel />}
+        </div>
       )}
     </>
   );
