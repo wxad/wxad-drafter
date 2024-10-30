@@ -37,8 +37,8 @@ const RightPanel = () => {
     if (currentHoverEl) {
       const newElement = document.createElement('p');
       newElement.innerText = 'New Text';
-      newElement.style.marginLeft = "16px"
-      newElement.style.marginRight = "16px"
+      newElement.style.marginLeft = '16px';
+      newElement.style.marginRight = '16px';
       currentHoverEl.after(newElement);
 
       setCurrentClickEl(newElement);
@@ -70,6 +70,18 @@ const RightPanel = () => {
   useEffect(() => {
     if (currentClickEl) {
       const rect = currentClickEl.getBoundingClientRect();
+
+
+      if (
+        window.scrollY - 150 > rect.top ||
+        window.scrollY + window.innerHeight < rect.top + 500
+      ) {
+        window.scrollTo({
+          top: rect.top + 150,
+          // behavior: 'smooth',
+        });
+      }
+
       const type = getComponentType(currentClickEl);
       let infos: { [key: string]: any } = {};
 
@@ -178,13 +190,14 @@ const RightPanel = () => {
       {editorEl && currentContentInfo && (
         <div
           className={cn(
-            'absolute left-0 pt-2 px-4 pl-3 bg-white rounded shadow-inherit',
+            'absolute left-0 pt-2 px-4 pl-3 bg-white rounded',
             // 调整间距模式下，隐藏 panel
             dimensionSwitch ? 'hidden' : ''
           )}
           style={{
             // 顶部位置写死 不算了
             top: (top || 0) + 153,
+            boxShadow: '0 1px 5px 0 rgba(0, 0, 0, 0.05)',
           }}
           onClick={(e) => {
             // Base.tsx 中对 window 上增加了 click 事件，用于清除 currentClickEl
@@ -274,12 +287,27 @@ const RightPanel = () => {
                   active={popupVisible}
                 />
               </Popover>
-              <Button
+              {/* <Button
                 className="opacity-60"
                 leftIcon="draggable"
                 size="mini"
                 theme="light"
-              />
+                style={{
+                  cursor: 'grab',
+                }}
+                draggable
+                onDragStart={(e: DragEvent) => {
+                  if (e.dataTransfer) {
+                    e.dataTransfer.effectAllowed = 'copyMove';
+                    // setDraggingComponent(field);
+                    // 复制一个和 currentHoverEl 一样的元素，作为 drag 的 ghost 元素
+                    const ghost = currentHoverEl.cloneNode(true) as HTMLElement;
+                  }
+                }}
+                onDragEnd={() => {
+                  // setDraggingComponent(null);
+                }}
+              /> */}
             </div>
           </div>,
           eduiEl

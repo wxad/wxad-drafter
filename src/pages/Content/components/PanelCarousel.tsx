@@ -1,7 +1,7 @@
 import React from 'react';
-import Remove from './Remove';
 import { IContentInfo, useStore } from '../stores';
 import { putPic, uploadFileBySource } from '../utils';
+import PanelToolbar from './PanelToolbar';
 
 interface IInfoItem {
   el: SVGSVGElement;
@@ -121,7 +121,7 @@ const PanelCarousel: React.FC = () => {
     <>
       <div className="flex items-center justify-between mb-3 font-semibold text-sm">
         <div>横滑</div>
-        <Remove />
+        <PanelToolbar />
       </div>
       <div className="flex mb-3">
         <div className="mr-2 pt-[2px] text-xs">

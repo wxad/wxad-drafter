@@ -1,7 +1,6 @@
-import { Input, Switch } from 'adui';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { IContentInfo, useStore } from '../stores';
-import Remove from './Remove';
+import PanelToolbar from './PanelToolbar';
 
 const PanelImage = () => {
   const currentContentInfo = useStore((state) => state.currentContentInfo);
@@ -14,7 +13,7 @@ const PanelImage = () => {
     <>
       <div className="flex items-center justify-between mb-3 font-semibold text-sm">
         <div>文本</div>
-        <Remove />
+        <PanelToolbar />
       </div>
       <div className="flex mb-3">
         <div className="mr-2 pt-[2px] text-xs">字号</div>
