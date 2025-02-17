@@ -1,4 +1,4 @@
-import { Input, Switch } from 'adui';
+import { Input, NumericInput, Switch } from 'adui';
 import React, { useEffect, useState } from 'react';
 import { IContentInfo, useStore } from '../stores';
 import { cn, putPic, uploadFileBySource } from '../utils';
@@ -14,10 +14,22 @@ const PanelImage = () => {
     'idle' | 'uploading' | 'error'
   >('idle');
   const [inputValue, setInputValue] = useState(infos.link || '');
+  const [borderRadius, setBorderRadius] = useState(infos.radius || 0);
 
   useEffect(() => {
     setInputValue(infos.link || '');
   }, [infos.link]);
+
+  useEffect(() => {
+    setBorderRadius(infos.radius || 0);
+  }, [infos.radius]);
+
+  const updateRadius = (radius: number) => {
+    const targetEl = el.querySelector('svg') as SVGSVGElement | undefined;
+    if (targetEl) {
+      targetEl.style.borderRadius = `${radius}px`;
+    }
+  }
 
   const updateLink = (newLink: string) => {
     let targetEl = el.querySelector('a') as HTMLAnchorElement | undefined;
@@ -258,6 +270,19 @@ const PanelImage = () => {
             />
           )}
         </div>
+      </div>
+      <div className='flex mb-3'>
+        <div className='mr-2 pt-[2px] text-xs'>圆角</div>
+        <NumericInput
+          min={0}
+          max={100}
+          size='mini'
+          value={borderRadius}
+          onChange={(value) => {
+            setBorderRadius(value || 0);
+            updateRadius(value || 0);
+          }}
+        />
       </div>
     </>
   );

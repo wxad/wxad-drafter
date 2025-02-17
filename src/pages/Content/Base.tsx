@@ -12,6 +12,7 @@ import {
 // 这里做一些页面初始化的操作
 const Base = () => {
   const dimensionSwitch = useStore((state) => state.dimensionSwitch);
+  const setBottomMainEl = useStore((state) => state.setBottomMainEl);
   const setEduiEl = useStore((state) => state.setEduiEl);
   const setToolBarEl = useStore((state) => state.setToolBarEl);
   const setBottomToolBarEl = useStore((state) => state.setBottomToolBarEl);
@@ -42,13 +43,24 @@ const Base = () => {
     const bottomToolBar = document.querySelector(
       `#js_button_area .tool_bar`
     ) as HTMLDivElement | null;
+    const bottomMainEl = document.getElementById(
+      'bottom_main'
+    ) as HTMLDivElement | null;
 
-    if (editor && edui && leftPanel && toolBar && bottomToolBar) {
+    if (
+      editor &&
+      edui &&
+      leftPanel &&
+      toolBar &&
+      bottomToolBar &&
+      bottomMainEl
+    ) {
       setEditorEl(editor);
       setEduiEl(edui);
       setLeftPanelEl(leftPanel);
       setToolBarEl(toolBar);
       setBottomToolBarEl(bottomToolBar);
+      setBottomMainEl(bottomMainEl);
 
       if (leftPanel) {
         leftPanel.addEventListener('click', checkElements, false);

@@ -30,6 +30,9 @@ const useStore = create<{
   currentDimensionStates: ICurrentDimensionState;
   setCurrentDimensionState: (states: Partial<ICurrentDimensionState>) => void;
 
+  bottomMainEl: HTMLDivElement | null;
+  setBottomMainEl: (el: HTMLDivElement | null) => void;
+
   leftPanelEl: HTMLDivElement | null;
   setLeftPanelEl: (el: HTMLDivElement | null) => void;
 
@@ -59,7 +62,6 @@ const useStore = create<{
 
   currentContentInfo: IContentInfo | null;
   setCurrentContentInfo: (info: IContentInfo | null) => void;
-
 }>()((set) => ({
   currentDimensionStates: {
     x: 0,
@@ -81,6 +83,9 @@ const useStore = create<{
     set((s) => ({
       currentDimensionStates: { ...s.currentDimensionStates, ...states },
     })),
+
+  bottomMainEl: null,
+  setBottomMainEl: (el) => set({ bottomMainEl: el }),
 
   leftPanelEl: null,
   setLeftPanelEl: (el) => set({ leftPanelEl: el }),

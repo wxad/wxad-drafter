@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import RightPanel from './RightPanel';
-import Dimenson from './Dimension';
+import React from 'react';
 import Base from './Base';
+import Dimenson from './Dimension';
+import RightPanel from './RightPanel';
+import ToolPopover from './ToolPopover';
 // import AI from './AI';
 
 const App = () => {
@@ -10,6 +11,7 @@ const App = () => {
       <Base />
       <Dimenson />
       <RightPanel />
+      <ToolPopover />
       {/* <AI /> */}
     </>
   );

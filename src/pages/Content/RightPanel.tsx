@@ -1,15 +1,15 @@
-import { Button, Icon, Popover } from 'adui';
+import { Button, Popover } from 'adui';
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import PanelText from './components/PanelText';
 import PanelCarousel from './components/PanelCarousel';
 import PanelImage from './components/PanelImage';
+import PanelText from './components/PanelText';
 import { useStore } from './stores';
 import {
   cn,
+  componentLists,
   extractAttributeValue,
   getComponentType,
-  componentLists,
 } from './utils';
 
 const RightPanel = () => {
@@ -94,6 +94,7 @@ const RightPanel = () => {
           currentClickEl.outerHTML,
           'background-image'
         );
+        infos.radius = extractAttributeValue(currentClickEl.outerHTML, 'border-radius');
         infos.link = extractAttributeValue(currentClickEl.outerHTML, 'href');
       }
 
