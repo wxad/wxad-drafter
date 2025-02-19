@@ -14,6 +14,16 @@ const getJsContent = async (url: string): Promise<string> => {
       // 加载 HTML 内容到 cheerio
       const $ = cheerio.load(response.data);
 
+      // 遍历所有的 img 标签，把 data-src 属性的值设置到src属性上
+      const $imgs = $('#js_content img');
+      $imgs.each((index, img) => {
+        const $img = $(img);
+        const dataSrc = $img.attr('data-src');
+        if (dataSrc) {
+          $img.attr('src', dataSrc);
+        }
+      });
+
       // 查找 id 为 js_content 的元素
       const jsContent = $('#js_content').html();
 
