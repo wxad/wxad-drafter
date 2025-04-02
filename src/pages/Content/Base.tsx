@@ -26,8 +26,6 @@ const Base = () => {
   const setCurrentDimensionState = useStore(
     (state) => state.setCurrentDimensionState
   );
-  const bindEventIds = useStore((state) => state.bindEventIds);
-  const setBindEventIds = useStore((state) => state.setBindEventIds);
 
   const checkElements = useCallback(() => {
     const leftPanel = document.getElementById(
@@ -125,40 +123,29 @@ const Base = () => {
     }
   }, [editorEl]);
 
+  const handleElMouseEnter = (e: Event) => {
+    setCurrentHoverEl(e.target as HTMLDivElement);
+  };
+
+  const handleElClick = (e: Event) => {
+    const type = getComponentType(e.target as HTMLDivElement);
+    if (['image', 'carousel'].includes(type)) {
+      e.preventDefault();
+    }
+    setCurrentClickEl(e.target as HTMLDivElement);
+  };
+
   const bindEvents = () => {
     const iframeBody = iframeEl?.contentDocument?.body;
 
     if (iframeBody) {
       const children = Array.from(iframeBody.children) as HTMLDivElement[];
       children.forEach((child) => {
-        if (child.dataset.id && bindEventIds.includes(child.dataset.id)) {
-          return;
-        }
+        child.removeEventListener('mouseenter', handleElMouseEnter, false);
+        child.addEventListener('mouseenter', handleElMouseEnter, false);
 
-        child.dataset.id =
-          child.dataset.id || Math.random().toString(36).substring(2, 15);
-
-        child.addEventListener(
-          'mouseenter',
-          () => {
-            setCurrentHoverEl(child as HTMLDivElement);
-          },
-          false
-        );
-
-        child.addEventListener(
-          'click',
-          (e) => {
-            const type = getComponentType(child);
-            if (['image', 'carousel'].includes(type)) {
-              e.preventDefault();
-            }
-            setCurrentClickEl(child as HTMLDivElement);
-          },
-          false
-        );
-
-        setBindEventIds([...bindEventIds, child.dataset.id]);
+        child.removeEventListener('click', handleElClick, false);
+        child.addEventListener('click', handleElClick, false);
       });
     }
   };

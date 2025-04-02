@@ -57,11 +57,6 @@ const useStore = create<{
   currentClickEl: HTMLDivElement | null;
   setCurrentClickEl: (el: HTMLDivElement | null) => void;
 
-
-  // 记录已经绑定过事件的元素 id
-  bindEventIds: string[];
-  setBindEventIds: (ids: string[]) => void;
-
   dimensionSwitch: boolean;
   setDimensionSwitch: (value: boolean) => void;
 
@@ -115,9 +110,6 @@ const useStore = create<{
 
   currentClickEl: null,
   setCurrentClickEl: (el) => set({ currentClickEl: el }),
-
-  bindEventIds: [],
-  setBindEventIds: (ids) => set({ bindEventIds: ids }),
 
   dimensionSwitch: false,
   setDimensionSwitch: (value) => set({ dimensionSwitch: value }),
