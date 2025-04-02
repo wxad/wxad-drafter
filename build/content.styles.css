@@ -294,6 +294,10 @@
   width: 100%;
 }
 
+.w-\[200px\] {
+  width: 200px;
+}
+
 .min-w-1 {
   min-width: 0.25rem;
 }
@@ -423,10 +427,6 @@
   border-width: 1px;
 }
 
-.border-\[1\.5px\] {
-  border-width: 1.5px;
-}
-
 .border-l {
   border-left-width: 1px;
 }
@@ -443,39 +443,34 @@
   border-style: none;
 }
 
-.border-\[\#4597f8\] {
-  --tw-border-opacity: 1;
-  border-color: rgb(69 151 248 / var(--tw-border-opacity));
-}
-
 .border-\[\#e7e7eb\] {
   --tw-border-opacity: 1;
-  border-color: rgb(231 231 235 / var(--tw-border-opacity));
+  border-color: rgb(231 231 235 / var(--tw-border-opacity, 1));
 }
 
 .border-\[hsl\(240_5\.9\%_90\%\)\] {
   --tw-border-opacity: 1;
-  border-color: hsl(240 5.9% 90% / var(--tw-border-opacity));
+  border-color: hsl(240 5.9% 90% / var(--tw-border-opacity, 1));
 }
 
 .border-neutral-200 {
   --tw-border-opacity: 1;
-  border-color: rgb(229 229 229 / var(--tw-border-opacity));
+  border-color: rgb(229 229 229 / var(--tw-border-opacity, 1));
 }
 
 .bg-\[\#4597f8\] {
   --tw-bg-opacity: 1;
-  background-color: rgb(69 151 248 / var(--tw-bg-opacity));
+  background-color: rgb(69 151 248 / var(--tw-bg-opacity, 1));
 }
 
 .bg-black {
   --tw-bg-opacity: 1;
-  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1));
 }
 
 .bg-white {
   --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
 }
 
 .bg-opacity-10 {
@@ -577,22 +572,22 @@
 
 .text-\[\#999\] {
   --tw-text-opacity: 1;
-  color: rgb(153 153 153 / var(--tw-text-opacity));
+  color: rgb(153 153 153 / var(--tw-text-opacity, 1));
 }
 
 .text-\[\#f46161\] {
   --tw-text-opacity: 1;
-  color: rgb(244 97 97 / var(--tw-text-opacity));
+  color: rgb(244 97 97 / var(--tw-text-opacity, 1));
 }
 
 .text-neutral-400 {
   --tw-text-opacity: 1;
-  color: rgb(163 163 163 / var(--tw-text-opacity));
+  color: rgb(163 163 163 / var(--tw-text-opacity, 1));
 }
 
 .text-white {
   --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
 .opacity-0 {
@@ -614,6 +609,18 @@
 .outline-none {
   outline: 2px solid transparent;
   outline-offset: 2px;
+}
+
+.outline {
+  outline-style: solid;
+}
+
+.outline-\[2px\] {
+  outline-width: 2px;
+}
+
+.outline-\[\#07c160\] {
+  outline-color: #07c160;
 }
 
 :root {
@@ -707,7 +714,7 @@
 
 .hover\:bg-neutral-100:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(245 245 245 / var(--tw-bg-opacity));
+  background-color: rgb(245 245 245 / var(--tw-bg-opacity, 1));
 }
 
 .group:hover .group-hover\:visible {

@@ -1,4 +1,4 @@
-import { Input, NumericInput, Switch } from 'adui';
+import { Input, Slider, Switch } from 'adui';
 import React, { useEffect, useState } from 'react';
 import { IContentInfo, useStore } from '../stores';
 import { cn, putPic, uploadFileBySource } from '../utils';
@@ -10,99 +10,115 @@ const PanelImage = () => {
     (state) => state.setCurrentContentInfo
   );
   const { el, type, top, infos } = currentContentInfo as IContentInfo;
+
   const [uploadState, setUploadState] = useState<
     'idle' | 'uploading' | 'error'
   >('idle');
   const [inputValue, setInputValue] = useState(infos.link || '');
-  const [borderRadius, setBorderRadius] = useState(infos.radius || 0);
+  const [borderRadius, setBorderRadius] = useState(parseInt(infos.radius) || 0);
 
   useEffect(() => {
     setInputValue(infos.link || '');
   }, [infos.link]);
 
   useEffect(() => {
-    setBorderRadius(infos.radius || 0);
+    setBorderRadius(parseInt(infos.radius) || 0);
   }, [infos.radius]);
 
-  const updateRadius = (radius: number) => {
-    const targetEl = el.querySelector('svg') as SVGSVGElement | undefined;
-    if (targetEl) {
-      targetEl.style.borderRadius = `${radius}px`;
-    }
-  }
-
-  const updateLink = (newLink: string) => {
-    let targetEl = el.querySelector('a') as HTMLAnchorElement | undefined;
-
-    if (!targetEl) {
-      const svg =
-        el.tagName.toUpperCase() === 'SVG'
-          ? el
-          : (el.querySelector('svg') as SVGSVGElement);
-      svg.innerHTML = `
-      <a
-        href="${newLink}"
-        _href="${newLink}"
-        target="_blank"
-        data-linktype="2"
-      >
-        <rect x="0" y="0" width="${infos.viewBox?.split(' ')[2]}" height="${
-        infos.viewBox?.split(' ')[3]
-      }" fill="transparent"></rect>
-      </a>`;
-    } else {
-      targetEl.setAttribute('href', newLink);
-      targetEl.setAttribute('_href', newLink);
-    }
-
-    if (targetEl) {
-      targetEl.style.pointerEvents = newLink ? 'auto' : 'none';
+  const checkIfMpImg = () => {
+    if (el.innerHTML.includes('wxw-img')) {
+      el.innerHTML = `<svg viewBox="${infos.viewBox}" style="background-image: ${infos.image}; background-size: cover;"></svg>`;
     }
   };
 
+  const updateRadius = (radius: number) => {
+    checkIfMpImg();
+    setTimeout(() => {
+      const targetEl = el.querySelector('svg') as SVGSVGElement | undefined;
+      if (targetEl) {
+        targetEl.style.borderRadius = `${radius}px`;
+      }
+    }, 0);
+  };
+
+  const updateLink = (newLink: string) => {
+    checkIfMpImg();
+    setTimeout(() => {
+      let targetEl = el.querySelector('a') as HTMLAnchorElement | undefined;
+
+      if (!targetEl) {
+        const svg =
+          el.tagName.toUpperCase() === 'SVG'
+            ? el
+            : (el.querySelector('svg') as SVGSVGElement);
+        svg.innerHTML = `
+        <a
+          href="${newLink}"
+          _href="${newLink}"
+          target="_blank"
+          data-linktype="2"
+        >
+          <rect x="0" y="0" width="${infos.viewBox?.split(' ')[2]}" height="${
+          infos.viewBox?.split(' ')[3]
+        }" fill="transparent"></rect>
+        </a>`;
+      } else {
+        targetEl.setAttribute('href', newLink);
+        targetEl.setAttribute('_href', newLink);
+      }
+
+      if (targetEl) {
+        targetEl.style.pointerEvents = newLink ? 'auto' : 'none';
+      }
+    }, 0);
+  };
+
   const updateImage = (newImage: string, width: string, height: string) => {
-    // 找到包括 el 及 el 在内的第一个具有 inline background-image 的元素，而且 background-image 得是一个 url，把纯色或 gradient 的筛选掉
-    const targetEl =
-      el.tagName.toUpperCase() === 'SVG' &&
-      el.style.backgroundImage.includes('url')
-        ? el
-        : (el.querySelector('[style*="background-image"][style*="url"]') as
-            | HTMLElement
-            | undefined);
+    checkIfMpImg();
+    setTimeout(() => {
+      // 找到包括 el 及 el 在内的第一个具有 inline background-image 的元素，而且 background-image 得是一个 url，把纯色或 gradient 的筛选掉
+      const targetEl =
+        el.tagName.toUpperCase() === 'SVG' &&
+        el.style.backgroundImage.includes('url')
+          ? el
+          : (el.querySelector('[style*="background-image"][style*="url"]') as
+              | HTMLElement
+              | undefined);
 
-    if (targetEl) {
-      targetEl.style.backgroundImage = newImage;
+      if (targetEl) {
+        targetEl.style.backgroundImage = newImage;
 
-      if (targetEl.tagName.toUpperCase() === 'SVG') {
-        targetEl.setAttribute('viewBox', `0 0 ${width} ${height}`);
-        targetEl.style.display = 'block';
+        if (targetEl.tagName.toUpperCase() === 'SVG') {
+          targetEl.setAttribute('viewBox', `0 0 ${width} ${height}`);
+          targetEl.style.display = 'block';
+        }
       }
-    }
 
-    // 找到 rect，修改 rect 的宽高
+      // 找到 rect，修改 rect 的宽高
 
-    const rect = el.querySelector('rect') as SVGRectElement | undefined;
+      const rect = el.querySelector('rect') as SVGRectElement | undefined;
 
-    if (rect) {
-      rect.setAttribute('width', width);
-      rect.setAttribute('height', height);
-    }
-
-    const iframeEl = useStore.getState().iframeEl;
-    if (iframeEl) {
-      iframeEl.style.userSelect = '';
-      iframeEl.style.pointerEvents = '';
-
-      // 重新计算 iframe 内 body 的高度，公众平台会设一个固定的高度
-      const body = iframeEl.contentDocument?.body;
-      if (body) {
-        body.style.height = '';
-        const height = body.scrollHeight;
-        body.style.height = `${height}px`;
-        iframeEl.style.height = `${height}px`;
-        (iframeEl.parentNode as HTMLDivElement).style.height = `${height}px`;
+      if (rect) {
+        rect.setAttribute('width', width);
+        rect.setAttribute('height', height);
       }
-    }
+
+      const iframeEl = useStore.getState().iframeEl;
+      if (iframeEl) {
+        iframeEl.style.userSelect = '';
+        iframeEl.style.pointerEvents = '';
+
+        // 重新计算 iframe 内 body 的高度，公众平台会设一个固定的高度
+        const body = iframeEl.contentDocument?.body;
+        if (body) {
+          body.style.height = '';
+          const height = body.scrollHeight;
+          body.style.height = `${height}px`;
+          iframeEl.style.height = `${height}px`;
+          (iframeEl.parentNode as HTMLDivElement).style.height = `${height}px`;
+        }
+      }
+    }, 0);
   };
 
   return (
@@ -271,16 +287,17 @@ const PanelImage = () => {
           )}
         </div>
       </div>
-      <div className='flex mb-3'>
-        <div className='mr-2 pt-[2px] text-xs'>圆角</div>
-        <NumericInput
+      <div className="flex mb-3 items-center">
+        <div className="mr-2 text-xs">圆角</div>
+        <Slider
+          className="flex-1"
           min={0}
           max={100}
-          size='mini'
           value={borderRadius}
+          step={1}
           onChange={(value) => {
-            setBorderRadius(value || 0);
-            updateRadius(value || 0);
+            setBorderRadius(value as number);
+            updateRadius(value as number);
           }}
         />
       </div>

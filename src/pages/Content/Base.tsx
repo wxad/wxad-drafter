@@ -26,6 +26,8 @@ const Base = () => {
   const setCurrentDimensionState = useStore(
     (state) => state.setCurrentDimensionState
   );
+  const bindEventIds = useStore((state) => state.bindEventIds);
+  const setBindEventIds = useStore((state) => state.setBindEventIds);
 
   const checkElements = useCallback(() => {
     const leftPanel = document.getElementById(
@@ -125,10 +127,17 @@ const Base = () => {
 
   const bindEvents = () => {
     const iframeBody = iframeEl?.contentDocument?.body;
+
     if (iframeBody) {
-      const children = Array.from(iframeBody.children);
+      const children = Array.from(iframeBody.children) as HTMLDivElement[];
       children.forEach((child) => {
-        const type = getComponentType(child);
+        if (child.dataset.id && bindEventIds.includes(child.dataset.id)) {
+          return;
+        }
+
+        child.dataset.id =
+          child.dataset.id || Math.random().toString(36).substring(2, 15);
+
         child.addEventListener(
           'mouseenter',
           () => {
@@ -136,24 +145,20 @@ const Base = () => {
           },
           false
         );
-        // child.addEventListener(
-        //   'mouseleave',
-        //   () => {
-        //     setCurrentHoverEl(null);
-        //   },
-        //   false
-        // );
+
         child.addEventListener(
           'click',
           (e) => {
+            const type = getComponentType(child);
             if (['image', 'carousel'].includes(type)) {
               e.preventDefault();
-              e.stopPropagation();
             }
             setCurrentClickEl(child as HTMLDivElement);
           },
           false
         );
+
+        setBindEventIds([...bindEventIds, child.dataset.id]);
       });
     }
   };
@@ -164,8 +169,19 @@ const Base = () => {
         bindEvents();
       });
       resizeObserver.observe(iframeEl.contentDocument?.body as Element);
+
+      // 监听 iframe 内的元素有变化时也重新绑定
+      const observer = new MutationObserver(() => {
+        bindEvents();
+      });
+      observer.observe(iframeEl.contentDocument?.body as Element, {
+        childList: true,
+        subtree: true,
+      });
+
       return () => {
         resizeObserver.disconnect();
+        observer.disconnect();
       };
     }
   }, [iframeEl]);

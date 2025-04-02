@@ -28,6 +28,8 @@ const RightPanel = () => {
   const currentHoverElType = getComponentType(currentHoverEl);
   const currentClickElType = getComponentType(currentClickEl);
 
+  const isShowOutlineType = ['image', 'carousel'].includes(currentClickElType);
+
   const { type, top } = currentContentInfo || {};
   const [popupVisible, setPopupVisible] = useState(false);
 
@@ -71,7 +73,6 @@ const RightPanel = () => {
     if (currentClickEl) {
       const rect = currentClickEl.getBoundingClientRect();
 
-
       if (
         window.scrollY - 150 > rect.top ||
         window.scrollY + window.innerHeight < rect.top + 500
@@ -86,16 +87,36 @@ const RightPanel = () => {
       let infos: { [key: string]: any } = {};
 
       if (type === 'image') {
-        infos.viewBox = extractAttributeValue(
-          currentClickEl.outerHTML,
-          'viewBox'
-        );
-        infos.image = extractAttributeValue(
-          currentClickEl.outerHTML,
-          'background-image'
-        );
-        infos.radius = extractAttributeValue(currentClickEl.outerHTML, 'border-radius');
-        infos.link = extractAttributeValue(currentClickEl.outerHTML, 'href');
+        // 分为通过 mp 插入的图片和 svg 图片
+        if (currentClickEl.outerHTML.includes('wxw-img')) {
+          const imgEl = currentClickEl.querySelector(
+            '.wxw-img'
+          ) as HTMLImageElement;
+          const { src, naturalWidth, naturalHeight } = imgEl;
+
+          infos.viewBox = `0 0 ${naturalWidth} ${naturalHeight}`;
+          infos.image = `url(${src})`;
+          infos.radius = extractAttributeValue(
+            currentClickEl.outerHTML,
+            'border-radius'
+          );
+          infos.link = extractAttributeValue(currentClickEl.outerHTML, 'href');
+        } else {
+          infos.viewBox = extractAttributeValue(
+            currentClickEl.outerHTML,
+            'viewBox'
+          );
+          infos.image = extractAttributeValue(
+            currentClickEl.outerHTML,
+            'background-image'
+          );
+
+          infos.radius = extractAttributeValue(
+            currentClickEl.outerHTML,
+            'border-radius'
+          );
+          infos.link = extractAttributeValue(currentClickEl.outerHTML, 'href');
+        }
       }
 
       if (type === 'carousel') {
@@ -321,8 +342,7 @@ const RightPanel = () => {
           <div
             className={cn(
               'absolute z-[117] pointer-events-none',
-              currentClickElType !== 'text' &&
-                'border-[1.5px] border-solid border-[#4597f8]'
+              isShowOutlineType && 'outline-[2px] outline outline-[#07c160]'
             )}
             style={{
               top: currentClickStates.y,

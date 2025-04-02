@@ -18,13 +18,15 @@ export const LEFT_PANEL_ID = 'js_side_article_list';
 // js toolbar
 export const JS_TOOLBAR_ID = 'js_toolbar';
 
-// 判断是否是 svg 图片组件
+// 判断是否是 svg 图片组件 或是手动插入的图片，手动插入的图片判断为是否类名有 wxw-img
 export const isImageComponent = (element: Element): boolean => {
   return (
     element.outerHTML.includes('svg') &&
     element.outerHTML.includes('background-image') &&
     element.outerHTML.includes('viewBox')
-  );
+  ) || (
+    element.outerHTML.includes('wxw-img')
+  )
 };
 
 // 判断是否是横滑组件
