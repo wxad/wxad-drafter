@@ -62,6 +62,9 @@ const useStore = create<{
 
   currentContentInfo: IContentInfo | null;
   setCurrentContentInfo: (info: IContentInfo | null) => void;
+
+  addComponentPopupVisible: boolean;
+  setAddComponentPopupVisible: (value: boolean) => void;
 }>()((set) => ({
   currentDimensionStates: {
     x: 0,
@@ -116,6 +119,9 @@ const useStore = create<{
 
   currentContentInfo: null,
   setCurrentContentInfo: (info) => set({ currentContentInfo: info }),
+
+  addComponentPopupVisible: false,
+  setAddComponentPopupVisible: (value) => set({ addComponentPopupVisible: value }),
 }));
 
 export { useStore };

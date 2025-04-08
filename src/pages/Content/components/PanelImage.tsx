@@ -27,7 +27,7 @@ const PanelImage = () => {
 
   const checkIfMpImg = () => {
     if (el.innerHTML.includes('wxw-img')) {
-      el.innerHTML = `<svg viewBox="${infos.viewBox}" style="background-image: ${infos.image}; background-size: cover;"></svg>`;
+      el.innerHTML = `<svg viewBox="${infos.viewBox}" style="display: block;background-image: ${infos.image};background-size: cover;"></svg>`;
     }
   };
 

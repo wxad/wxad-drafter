@@ -82,7 +82,10 @@ const Base = () => {
   }, []);
 
   const handleEditorMouseLeave = () => {
-    if (!useStore.getState().currentDimensionStates.editing) {
+    if (
+      !useStore.getState().currentDimensionStates.editing &&
+      !useStore.getState().addComponentPopupVisible
+    ) {
       setCurrentDimensionState({
         x: 0,
         y: 0,
@@ -132,7 +135,7 @@ const Base = () => {
     if (['image', 'carousel'].includes(type)) {
       e.preventDefault();
     }
-    setCurrentClickEl(e.target as HTMLDivElement);
+    setCurrentClickEl(e.currentTarget as HTMLDivElement);
   };
 
   const bindEvents = () => {

@@ -31,10 +31,15 @@ const RightPanel = () => {
   const isShowOutlineType = ['image', 'carousel'].includes(currentClickElType);
 
   const { type, top } = currentContentInfo || {};
-  const [popupVisible, setPopupVisible] = useState(false);
+  const addComponentPopupVisible = useStore(
+    (state) => state.addComponentPopupVisible
+  );
+  const setAddComponentPopupVisible = useStore(
+    (state) => state.setAddComponentPopupVisible
+  );
 
   const handleAddComponent = (type: string) => {
-    setPopupVisible(false);
+    setAddComponentPopupVisible(false);
 
     if (currentHoverEl) {
       const newElement = document.createElement('p');
@@ -154,7 +159,7 @@ const RightPanel = () => {
     }
 
     // hover 到其他元素时，隐藏 popup
-    setPopupVisible(false);
+    setAddComponentPopupVisible(false);
 
     return () => {
       if (currentHoverEl) {
@@ -256,8 +261,8 @@ const RightPanel = () => {
                   trigger.parentNode as HTMLElement
                 }
                 trigger="click"
-                visible={popupVisible}
-                onVisibleChange={setPopupVisible}
+                visible={addComponentPopupVisible}
+                onVisibleChange={setAddComponentPopupVisible}
                 placement="bottom"
                 popup={
                   <div className="py-2 w-[150px]">
@@ -306,7 +311,7 @@ const RightPanel = () => {
                   leftIcon="add"
                   size="mini"
                   theme="light"
-                  active={popupVisible}
+                  active={addComponentPopupVisible}
                 />
               </Popover>
               {/* <Button
